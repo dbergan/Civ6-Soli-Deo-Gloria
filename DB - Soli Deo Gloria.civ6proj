@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Default" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Default</Configuration>
+    <Name>DB [ICON_Faith]Soli Deo Gloria[ICON_Faith]</Name>
+    <Guid>511d5452-9a6a-4230-8bca-5364a5477cee</Guid>
+    <ProjectGuid>{4c05eb77-6ea2-4d19-bcd7-4fff7aaa2a49}</ProjectGuid>
+    <ModVersion>16</ModVersion>
+    <Teaser>Religion is competitive and way more fun</Teaser>
+    <Description>[NEWLINE]- All players start with a (mortal) Great Prophet[NEWLINE]- Subsequent prophets add beliefs[NEWLINE]- Many new beliefs for all aspects of the game[NEWLINE]- All beliefs are shareable (no selfish "founder" beliefs)[NEWLINE]- No limits or "classes" of beliefs... add 20 to your religion[NEWLINE]- Additional Great Prophets[NEWLINE]- Lots of color and history[NEWLINE][NEWLINE]Read a description of all the changes here:[NEWLINE][NEWLINE]https://steamcommunity.com/sharedfiles/filedetails/?id=1529686382</Description>
+    <AffectsSavedGames>true</AffectsSavedGames>
+    <SupportsSinglePlayer>true</SupportsSinglePlayer>
+    <SupportsMultiplayer>true</SupportsMultiplayer>
+    <SupportsHotSeat>true</SupportsHotSeat>
+    <InGameActionData><![CDATA[<InGameActions><UpdateDatabase id="Database"><Properties><LoadOrder>210</LoadOrder></Properties><File priority="1">DB_lib.sql</File><File priority="2">SDG.sql</File><File priority="3">SDG_NewProphets.sql</File><File priority="4">SDG_Beliefs01_Food.sql</File><File priority="5">SDG_Beliefs02_Production.sql</File><File priority="6">SDG_Beliefs03_Military.sql</File><File priority="7">SDG_Beliefs04_Science.sql</File><File priority="8">SDG_Beliefs05_Culture.sql</File><File priority="9">SDG_Beliefs06_Amenities.sql</File><File priority="10">SDG_Beliefs07_Housing.sql</File><File priority="11">SDG_Beliefs08_Gold.sql</File><File priority="12">SDG_Beliefs09_Religion.sql</File><File priority="13">SDG_Beliefs10_City.sql</File><File priority="14">SDG_Beliefs11_Resources.sql</File><File priority="15">SDG_Beliefs12_Wonders.sql</File><File priority="16">SDG_Beliefs13_Naval.sql</File><File priority="17">SDG_Beliefs14_Muses.sql</File><File priority="18">SDG_Beliefs15_FaithPurchases.sql</File><File priority="19">SDG_Beliefs99_BeliefClasses.sql</File></UpdateDatabase><UpdateText id="Text"><Properties><LoadOrder>211</LoadOrder></Properties><File>LOC_SDG.sql</File><File>LOC_SDG_ReligiousBeliefs.sql</File><File>LOC_SDG_NewProphets.sql</File><File>LOC_SDG_FlavorQuotes.sql</File></UpdateText><UpdateIcons id="Icons"><Properties><LoadOrder>212</LoadOrder></Properties><File>SDG_Icons.xml</File></UpdateIcons></InGameActions>]]></InGameActionData>
+    <AssemblyName>DBR</AssemblyName>
+    <RootNamespace>DBR</RootNamespace>
+    <Authors>DB</Authors>
+    <ModProperties>
+      <CustomProperties />
+    </ModProperties>
+    <AssociationData><![CDATA[<Associations>
+  <Dependency type="Dlc" title="Rise and Fall" id="1B28771A-C749-434B-9053-D1380C553DE9" />
+  <Dependency type="Mod" title="Tomatekh's Historical Religions" id="2e6d1093-6689-4dd5-a47a-9539bc3f8a29" />
+  <Reference type="Mod" title="Non-geographic Pantheons moved to Religious Beliefs" id="5ea8c082-2010-4585-a432-24729ac48844" />
+  <Reference type="Mod" title="[COLOR_FLOAT_CULTURE]Religion Expanded[ENDCOLOR]" id="c6775ded-6693-474a-ade5-b4c51d932bd8" />
+  <Reference type="Mod" title="DB [ICON_Faith]All HS3 Buildings Available[ICON_Faith]" id="b767551f-8e70-4955-9928-1efd3950e7f1" />
+</Associations>]]></AssociationData>
+    <FrontEndActionData><![CDATA[<FrontEndActions><UpdateText id="NewAction"><Properties><LoadOrder>1</LoadOrder></Properties><File>LOC_SDG.sql</File></UpdateText></FrontEndActions>]]></FrontEndActionData>
+    <CompatibleVersions>1.2,2.0</CompatibleVersions>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Default' ">
+    <OutputPath>.</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="LOC_SDG_FlavorQuotes.sql">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="LOC_SDG_RemovedBeliefs.sql">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="SDG_Beliefs04_Science.sql">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="SDG_Beliefs05_Culture.sql">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="SDG_Beliefs10_City.sql">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="SDG_Beliefs09_Religion.sql">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="SDG_Beliefs06_Amenities.sql">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="SDG_Beliefs07_Housing.sql">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="SDG_Beliefs01_Food.sql">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="SDG_Beliefs08_Gold.sql">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="SDG_Beliefs02_Production.sql">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="SDG_Beliefs03_Military.sql">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="SDG_Beliefs15_FaithPurchases.sql">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="SDG_Beliefs13_Naval.sql">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="SDG_Beliefs11_Resources.sql">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="SDG_Beliefs12_Wonders.sql">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="SDG_Beliefs14_Muses.sql">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="SDG_Icons.xml">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="SDG.sql">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="SDG_NewProphets.sql">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="SDG_NewRelics.xml">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="LOC_SDG_ReligiousBeliefs.sql">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="LOC_SDG.sql">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="SDG_Beliefs99_BeliefClasses.sql">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="LOC_SDG_NewProphets.sql">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="SDG_RemovedBeliefs.sql">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="DB_lib.sql">
+      <SubType>Content</SubType>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildLocalExtensionPath)Civ6.targets" />
+</Project>
