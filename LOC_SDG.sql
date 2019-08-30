@@ -81,7 +81,7 @@ INSERT OR REPLACE INTO LocalizedText
   'The Prophet',
     'en_US'),
 ('LOC_TRAIT_CIVILIZATION_LAST_PROPHET_DESCRIPTION', 
-  'Automatically receive a Great[ICON_GreatProphet]Prophet at the start of the Classical era. +1[ICON_Science]Science for each foreign city following Arabia''s Religion.', 
+  'Automatically receive a [ICON_GreatProphet]Great Prophet at the start of the Classical era. +1[ICON_Science]Science for each foreign city following Arabia''s Religion.', 
     'en_US'),
 
 ('LOC_SDG_IMPROVEMENT_GREAT_SERMON', 
