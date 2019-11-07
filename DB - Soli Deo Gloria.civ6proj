@@ -12,7 +12,7 @@
     <SupportsSinglePlayer>true</SupportsSinglePlayer>
     <SupportsMultiplayer>true</SupportsMultiplayer>
     <SupportsHotSeat>true</SupportsHotSeat>
-    <InGameActionData><![CDATA[<InGameActions><UpdateDatabase id="Database"><Properties><LoadOrder>210</LoadOrder></Properties><File priority="1">DB_lib.sql</File><File priority="2">SDG.sql</File><File priority="3">SDG_NewProphets.sql</File><File priority="4">SDG_Beliefs01_Food.sql</File><File priority="5">SDG_Beliefs02_Production.sql</File><File priority="6">SDG_Beliefs03_Military.sql</File><File priority="7">SDG_Beliefs04_Science.sql</File><File priority="8">SDG_Beliefs05_Culture.sql</File><File priority="9">SDG_Beliefs06_Amenities.sql</File><File priority="10">SDG_Beliefs07_Housing.sql</File><File priority="11">SDG_Beliefs08_Gold.sql</File><File priority="12">SDG_Beliefs09_Religion.sql</File><File priority="13">SDG_Beliefs10_City.sql</File><File priority="14">SDG_Beliefs11_Resources.sql</File><File priority="15">SDG_Beliefs12_Wonders.sql</File><File priority="16">SDG_Beliefs13_Naval.sql</File><File priority="17">SDG_Beliefs14_Muses.sql</File><File priority="18">SDG_Beliefs15_FaithPurchases.sql</File><File priority="19">SDG_Beliefs99_BeliefClasses.sql</File></UpdateDatabase><UpdateText id="Text"><Properties><LoadOrder>211</LoadOrder></Properties><File>LOC_SDG.sql</File><File>LOC_SDG_ReligiousBeliefs.sql</File><File>LOC_SDG_NewProphets.sql</File><File>LOC_SDG_FlavorQuotes.sql</File></UpdateText><UpdateIcons id="Icons"><Properties><LoadOrder>212</LoadOrder></Properties><File>SDG_Icons.xml</File></UpdateIcons></InGameActions>]]></InGameActionData>
+    <InGameActionData><![CDATA[<InGameActions><UpdateDatabase id="Database"><Properties><LoadOrder>211</LoadOrder></Properties><File priority="2">SDG.sql</File><File priority="3">SDG_NewProphets.sql</File><File priority="4">SDG_Beliefs01_Food.sql</File><File priority="5">SDG_Beliefs02_Production.sql</File><File priority="6">SDG_Beliefs03_Military.sql</File><File priority="7">SDG_Beliefs04_Science.sql</File><File priority="8">SDG_Beliefs05_Culture.sql</File><File priority="9">SDG_Beliefs06_Amenities.sql</File><File priority="10">SDG_Beliefs07_Housing.sql</File><File priority="11">SDG_Beliefs08_Gold.sql</File><File priority="12">SDG_Beliefs09_Religion.sql</File><File priority="13">SDG_Beliefs10_City.sql</File><File priority="14">SDG_Beliefs11_Resources.sql</File><File priority="15">SDG_Beliefs12_Wonders.sql</File><File priority="16">SDG_Beliefs13_Naval.sql</File><File priority="17">SDG_Beliefs14_Muses.sql</File><File priority="18">SDG_Beliefs15_FaithPurchases.sql</File><File priority="19">SDG_Beliefs99_BeliefClasses.sql</File></UpdateDatabase><UpdateText id="Text"><Properties><LoadOrder>211</LoadOrder></Properties><File>LOC_SDG.sql</File><File>LOC_SDG_ReligiousBeliefs.sql</File><File>LOC_SDG_NewProphets.sql</File><File>LOC_SDG_FlavorQuotes.sql</File></UpdateText><UpdateIcons id="Icons"><Properties><LoadOrder>212</LoadOrder></Properties><File>SDG_Icons.xml</File></UpdateIcons><UpdateDatabase id="DB_lib"><Properties><LoadOrder>210</LoadOrder></Properties><File>DB_lib.sql</File></UpdateDatabase><UpdateDatabase id="GameDataLate"><Properties><LoadOrder>9999999</LoadOrder></Properties><File>SDG_GameDataLate.sql</File></UpdateDatabase></InGameActions>]]></InGameActionData>
     <AssemblyName>DBR</AssemblyName>
     <RootNamespace>DBR</RootNamespace>
     <Authors>DB</Authors>
@@ -82,6 +82,9 @@
       <SubType>Content</SubType>
     </Content>
     <Content Include="SDG_Beliefs14_Muses.sql">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="SDG_GameDataLate.sql">
       <SubType>Content</SubType>
     </Content>
     <Content Include="SDG_Icons.xml">

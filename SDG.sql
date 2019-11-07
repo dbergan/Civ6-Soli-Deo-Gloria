@@ -83,12 +83,86 @@ UPDATE GlobalParameters SET Value = 2 WHERE Name = 'RELIGION_INITIAL_BELIEFS' ;
 -- ------------------------------------
 UPDATE GreatPersonClasses SET MaxPlayerInstances = NULL WHERE GreatPersonClassType = 'GREAT_PERSON_CLASS_PROPHET' ;
 
---    Modifier for Adding a Belief
-INSERT INTO Modifiers (ModifierId, ModifierType, RunOnce, Permanent) VALUES
-                      ('SDG_ADD_BELIEF', 'MODIFIER_PLAYER_ADD_BELIEF', 1, 1) ;
-INSERT INTO ModifierArguments(ModifierId, Name, Value) VALUES
-                             ('SDG_ADD_BELIEF', 'Amount', 1) ;
+--    Great prophets die when they are attacked (instead of retreating)
+--    Great prophets only move 1 square/turn
+UPDATE Units SET CanRetreatWhenCaptured = 0, BaseMoves = 1 WHERE UnitType = 'UNIT_GREAT_PROPHET' ;
 
+--    Modifiers for Great Prophets
+INSERT INTO Modifiers 
+(ModifierId,							ModifierType,							RunOnce,	Permanent,	SubjectRequirementSetId) 
+VALUES
+('SDG_ADD_BELIEF',						'MODIFIER_PLAYER_ADD_BELIEF',			1,			1,			NULL),
+('SDG_+3_MOVEMENT',						'MODIFIER_PLAYER_UNIT_ADJUST_MOVEMENT', 0,			0,			NULL),
+('SDG_MOD_GREAT_PROPHET_STRENGTH_AOE',	'MODIFIER_PLAYER_UNITS_GRANT_ABILITY',	0,			0,			'DB_REQSET_AOE_OWNER_ADJACENCY'),
+('SDG_MOD_GREAT_PROPHET_MOVEMENT_AOE',	'MODIFIER_PLAYER_UNITS_GRANT_ABILITY',	0,			0,			'DB_REQSET_AOE_OWNER_ADJACENCY') ;
+
+INSERT INTO ModifierArguments 
+(ModifierId,							Name,			Value) 
+VALUES 
+('SDG_ADD_BELIEF',						'Amount',		1),
+('SDG_+3_MOVEMENT',						'Amount',		3),
+('SDG_MOD_GREAT_PROPHET_STRENGTH_AOE',	'AbilityType',	'SDG_ABILITY_GREAT_PROPHET_STRENGTH'),
+('SDG_MOD_GREAT_PROPHET_MOVEMENT_AOE',	'AbilityType',	'SDG_ABILITY_GREAT_PROPHET_MOVEMENT') ;
+
+
+-- Subsequent beliefs are granted upon the new prophet's births... but only after they've founded a religion
+
+-- Adding a promotion class with one promotion for Great Prophets
+-- The effect of the promotion is to give the player a new belief
+INSERT INTO Types (Type, Kind) VALUES 
+                  ('SDG_PROMOTION_CLASS_PROPHET', 'KIND_PROMOTION_CLASS'),
+				  ('SDG_PROMOTION_PROPHET_BELIEF_AND_MOVEMENT', 'KIND_PROMOTION') ;
+INSERT INTO UnitPromotionClasses (PromotionClassType, Name) VALUES 
+                           ('SDG_PROMOTION_CLASS_PROPHET', 'LOC_SDG_PROMOTION_CLASS_PROPHET') ;
+INSERT INTO UnitPromotions (UnitPromotionType, Name, Description, Level, PromotionClass, Column) VALUES 
+                           ('SDG_PROMOTION_PROPHET_BELIEF_AND_MOVEMENT', 'LOC_SDG_PROMOTION_PROPHET_BELIEF_AND_MOVEMENT_NAME', 'LOC_SDG_PROMOTION_PROPHET_BELIEF_AND_MOVEMENT_DESCRIPTION', 1, 'SDG_PROMOTION_CLASS_PROPHET', 1) ;
+INSERT INTO UnitPromotionModifiers (UnitPromotionType, ModifierId) VALUES 
+                           ('SDG_PROMOTION_PROPHET_BELIEF_AND_MOVEMENT', 'SDG_ADD_BELIEF'),
+						   ('SDG_PROMOTION_PROPHET_BELIEF_AND_MOVEMENT', 'SDG_+3_MOVEMENT'),
+						   ('SDG_PROMOTION_PROPHET_BELIEF_AND_MOVEMENT', 'SDG_MOD_GREAT_PROPHET_STRENGTH_AOE'),
+						   ('SDG_PROMOTION_PROPHET_BELIEF_AND_MOVEMENT', 'SDG_MOD_GREAT_PROPHET_MOVEMENT_AOE') ;
+
+
+-- This modifier grants our promotion to all great prophets (ala Mont St Michel)
+INSERT INTO Modifiers (ModifierId, ModifierType, Permanent) VALUES
+                      ('SDG_GRANT_PROMOTION_PROPHET_BELIEF', 'MODIFIER_PLAYER_UNITS_GRANT_PROMOTION', 1) ;
+INSERT INTO ModifierArguments(ModifierId, Name, Value) VALUES
+                             ('SDG_GRANT_PROMOTION_PROPHET_BELIEF', 'PromotionType', 'SDG_PROMOTION_PROPHET_BELIEF_AND_MOVEMENT') ;
+
+-- This modifier grants the above modifier to players that have founded a religion
+-- (beliefs added before a Religion causes the game to hang)
+INSERT INTO GameModifiers (ModifierId) VALUES ('SDG_ENABLE_GREAT_PROPHET_BELIEF_PROMOTION_AFTER_FOUNDED_RELIGION') ;
+INSERT INTO Modifiers (ModifierId, ModifierType, SubjectRequirementSetId) VALUES
+                      ('SDG_ENABLE_GREAT_PROPHET_BELIEF_PROMOTION_AFTER_FOUNDED_RELIGION', 'MODIFIER_ALL_PLAYERS_ATTACH_MODIFIER', 'DB_REQSET_PLAYER_FOUNDED_RELIGION') ;
+INSERT INTO ModifierArguments(ModifierId, Name, Value) VALUES
+                             ('SDG_ENABLE_GREAT_PROPHET_BELIEF_PROMOTION_AFTER_FOUNDED_RELIGION', 'ModifierId', 'SDG_GRANT_PROMOTION_PROPHET_BELIEF') ;
+
+UPDATE Units SET PromotionClass = 'SDG_PROMOTION_CLASS_PROPHET' WHERE UnitType = 'UNIT_GREAT_PROPHET' ;
+
+
+-- AOE bonuses for religious units near great prophets
+INSERT INTO Types (Type, Kind) VALUES ('SDG_ABILITY_GREAT_PROPHET_STRENGTH', 'KIND_ABILITY') ;
+INSERT INTO TypeTags (Type, Tag) VALUES ('SDG_ABILITY_GREAT_PROPHET_STRENGTH', 'CLASS_RELIGIOUS_ALL') ;
+INSERT INTO UnitAbilities (UnitAbilityType, Inactive, Name, Description) VALUES ('SDG_ABILITY_GREAT_PROPHET_STRENGTH', 1, 'LOC_SDG_ABILITY_GREAT_PROPHET_STRENGTH_NAME', 'LOC_SDG_ABILITY_GREAT_PROPHET_STRENGTH_DESCRIPTION') ;
+INSERT INTO UnitAbilityModifiers (UnitAbilityType, ModifierId) VALUES ('SDG_ABILITY_GREAT_PROPHET_STRENGTH', 'SDG_MOD_GREAT_PROPHET_STRENGTH') ;
+
+INSERT INTO Modifiers (ModifierId, ModifierType) VALUES ('SDG_MOD_GREAT_PROPHET_STRENGTH', 'MODIFIER_UNIT_ADJUST_COMBAT_STRENGTH') ;
+INSERT INTO ModifierArguments (ModifierId, Name, Value) VALUES ('SDG_MOD_GREAT_PROPHET_STRENGTH', 'Amount', 5) ;
+INSERT INTO ModifierStrings (ModifierId, Context, Text) VALUES ('SDG_MOD_GREAT_PROPHET_STRENGTH', 'Preview', 'LOC_SDG_MOD_GREAT_PROPHET_STRENGTH_PREVIEW') ;
+
+INSERT INTO Types (Type, Kind) VALUES ('SDG_ABILITY_GREAT_PROPHET_MOVEMENT', 'KIND_ABILITY') ;
+INSERT INTO TypeTags (Type, Tag) VALUES ('SDG_ABILITY_GREAT_PROPHET_MOVEMENT', 'CLASS_RELIGIOUS_ALL') ;
+INSERT INTO UnitAbilities (UnitAbilityType, Inactive, Name, Description) VALUES ('SDG_ABILITY_GREAT_PROPHET_MOVEMENT', 1, 'LOC_SDG_ABILITY_GREAT_PROPHET_MOVEMENT_NAME', 'LOC_SDG_ABILITY_GREAT_PROPHET_MOVEMENT_DESCRIPTION') ;
+INSERT INTO UnitAbilityModifiers (UnitAbilityType, ModifierId) VALUES ('SDG_ABILITY_GREAT_PROPHET_MOVEMENT', 'SDG_MOD_GREAT_PROPHET_MOVEMENT') ;
+
+INSERT INTO Modifiers (ModifierId, ModifierType) VALUES ('SDG_MOD_GREAT_PROPHET_MOVEMENT', 'MODIFIER_PLAYER_UNIT_ADJUST_MOVEMENT') ;
+INSERT INTO ModifierArguments (ModifierId, Name, Value) VALUES ('SDG_MOD_GREAT_PROPHET_MOVEMENT', 'Amount', 1) ;
+
+
+
+
+
+/*
 --    Great prophets can 'build' a Great Sermon (+1 Faith to tile)
 --    Great prophets die when they are attacked (instead of retreating)
 --    Great prophets only move 1 square/turn
@@ -154,6 +228,7 @@ INSERT INTO ModifierArguments(ModifierId, Name, Value) VALUES
                              ('SDG_ENABLE_GREAT_PROPHET_BELIEF_PROMOTION_AFTER_FOUNDED_RELIGION', 'ModifierId', 'SDG_GRANT_PROMOTION_PROPHET_BELIEF') ;
 
 UPDATE Units SET PromotionClass = 'SDG_PROMOTION_CLASS_PROPHET' WHERE UnitType = 'UNIT_GREAT_PROPHET' ;
+*/
 
 
 -- ------------------------------------
@@ -161,8 +236,6 @@ UPDATE Units SET PromotionClass = 'SDG_PROMOTION_CLASS_PROPHET' WHERE UnitType =
 -- All civs start with a Great Prophet
 -- ------------------------------------
 -- ------------------------------------
-DELETE FROM TraitModifiers WHERE ModifierId = 'TRAIT_GUARANTEE_ONE_PROPHET' ;
-
 INSERT INTO GameModifiers (ModifierId) VALUES 
                            ('SDG_FREE_PROPHET_PLAYERS_ATTACH_MODIFIER') ;
 INSERT INTO Modifiers (ModifierId, ModifierType, SubjectRequirementSetId) VALUES

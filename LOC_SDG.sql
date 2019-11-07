@@ -105,15 +105,23 @@ INSERT OR REPLACE INTO LocalizedText
 ('LOC_PEDIA_RELIGIONS_PAGEGROUP_SDG_BELIEFS_NAME', 'Religious Beliefs', 'en_US'),
 
 
--- Used by the AI's Great Prophet promotion (player should never see it)
+('LOC_SDG_ABILITY_GREAT_PROPHET_STRENGTH_NAME', 'Adjacent Great Prophet Combat', 'en_US'),
+('LOC_SDG_ABILITY_GREAT_PROPHET_STRENGTH_DESCRIPTION', 'When next to a Great Prophet, +5 [ICON_Religion] Religious Combat Strength', 'en_US'),
+('LOC_SDG_MOD_GREAT_PROPHET_STRENGTH_PREVIEW', '+{1_Value} Great Prophet', 'en_US'),
+
+('LOC_SDG_ABILITY_GREAT_PROPHET_MOVEMENT_NAME', 'Adjacent Great Prophet Movement', 'en_US'),
+('LOC_SDG_ABILITY_GREAT_PROPHET_MOVEMENT_DESCRIPTION', 'When next to a Great Prophet, +1 [ICON_Movement] Movement', 'en_US'),
+
+
+-- Used by the Great Prophet promotion
 ('LOC_SDG_PROMOTION_CLASS_PROPHET', 
   'Great Prophet', 
     'en_US'),
-('LOC_SDG_PROMOTION_PROPHET_BELIEF', 
-  'Add Belief', 
+('LOC_SDG_PROMOTION_PROPHET_BELIEF_AND_MOVEMENT_NAME', 
+  'Belief and Movement', 
     'en_US'),
-('LOC_SDG_PROMOTION_PROPHET_BELIEF_DESCRIPTION', 
-  'Adds a new belief to your religion.', 
+('LOC_SDG_PROMOTION_PROPHET_BELIEF_AND_MOVEMENT_DESCRIPTION', 
+  'Adds a new belief to your religion[NEWLINE]Prophet gets +3 [ICON_Movement] movement', 
     'en_US')
 	
 ;
