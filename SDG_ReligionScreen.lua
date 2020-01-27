@@ -11,7 +11,7 @@ local PADDING_ICON:number = 5;
 local PADDING_TABS:number = 10;
 -- SDG
 local NUM_MAX_BELIEFS:number = 1;
--- SDG
+-- /SDG
 local NUM_CUSTOM_ICONS:number = 36;
 local PADDING_RELIGION_ICON:number = 8;
 local PADDING_RELIGION_ICON_SMALL:number = 4;
@@ -659,23 +659,23 @@ function ChooseReligion()
 
 				local canChangeName = GameCapabilities.HasCapability("CAPABILITY_RENAME");
 				
---[[				if(row.RequiresCustomName and canChangeName) then
+--[[	SDG	
+                if(row.RequiresCustomName and canChangeName) then
 					Controls.ConfirmReligion:SetDisabled(true);
 					Controls.PendingReligionTitle:LocalizeAndSetText("LOC_UI_RELIGION_REQUIRES_NAME");
 					Controls.ChooseReligionName:SetDisabled(false);
 					Controls.ChooseReligionNameButton:SetDisabled(false);
 					Controls.ChooseReligionName:SetText("");
 					Controls.ChooseReligionName:TakeFocus();
--- SDG
 				else
 --]]
 				if(canChangeName) then
 					Controls.ConfirmReligion:SetDisabled(true);
 					Controls.ChooseReligionName:SetDisabled(false);
 					Controls.ChooseReligionNameButton:SetDisabled(false);
-					Controls.PendingReligionTitle:SetText(Locale.ToUpper(religionName));
-					Controls.ChooseReligionName:SetText(Locale.ToUpper(religionName));
--- /SDG
+					Controls.PendingReligionTitle:SetText(religionName);
+					Controls.ChooseReligionName:SetText(religionName);
+--		/SDG
 				else
 					Controls.ChooseReligionName:SetDisabled(true);
 					Controls.ChooseReligionNameButton:SetDisabled(true);
@@ -694,12 +694,13 @@ end
 -- ===========================================================================
 function IsReligionNameValid(name:string)
 	if name ~= nil then
+--[[	SDG
 		-- If it's really just the label in the customize name edit box, mark it as not being valid.
--- SDG
-		if Locale.ToUpper(name) == Locale.ToUpper(Locale.Lookup("LOC_UI_RELIGION_CHOOSE_RELIGION_NAME")) or Locale.ToUpper(name) == Locale.ToUpper(Locale.Lookup("LOC_RELIGION_CUSTOM")) then
--- /SDG
+		if Locale.ToUpper(name) == Locale.ToUpper(Locale.Lookup("LOC_UI_RELIGION_CHOOSE_RELIGION_NAME")) then
 			return false;
 		end
+--]]
+-- /SDG
 		for i = 1, #name do
 		local c = name:sub(i,i)
 			if(c ~= " ") then return true; end
