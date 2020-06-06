@@ -222,6 +222,7 @@ function UpdateTabs()
 		end
 
 -- SDG
+-- Takes away the the "3/9" for founded religions (since there is no max with this mod)
 		m_AllReligionsTab = AddTab(Locale.Lookup("LOC_UI_RELIGION_ALL_RELIGIONS", ""), nil, ViewAllReligions);
 -- /SDG
 	end
@@ -659,7 +660,18 @@ function ChooseReligion()
 
 				local canChangeName = GameCapabilities.HasCapability("CAPABILITY_RENAME");
 				
---[[	SDG	
+--		SDG	
+--	    Trying to make it so that players can change the name of built-in religions, but there's a catch-22:
+--      The code here works, but the name change currently doesn't stick (it reverts back to the built-in name). The fix to that is to set RequiresCustomName = 1 for each religion in the SQL (see SDG_GameDataLate),
+--      but doing that means that the computer founds religions with blank names. So for the time being, the SQL line is commented out.
+				if(canChangeName) then
+					Controls.ConfirmReligion:SetDisabled(true);
+					Controls.ChooseReligionName:SetDisabled(false);
+					Controls.ChooseReligionNameButton:SetDisabled(false);
+					Controls.PendingReligionTitle:SetText(religionName);
+					Controls.ChooseReligionName:SetText(religionName);
+				else
+--[[
                 if(row.RequiresCustomName and canChangeName) then
 					Controls.ConfirmReligion:SetDisabled(true);
 					Controls.PendingReligionTitle:LocalizeAndSetText("LOC_UI_RELIGION_REQUIRES_NAME");
@@ -668,15 +680,9 @@ function ChooseReligion()
 					Controls.ChooseReligionName:SetText("");
 					Controls.ChooseReligionName:TakeFocus();
 				else
---]]
-				if(canChangeName) then
-					Controls.ConfirmReligion:SetDisabled(true);
-					Controls.ChooseReligionName:SetDisabled(false);
-					Controls.ChooseReligionNameButton:SetDisabled(false);
-					Controls.PendingReligionTitle:SetText(religionName);
-					Controls.ChooseReligionName:SetText(religionName);
 --		/SDG
-				else
+--]]
+
 					Controls.ChooseReligionName:SetDisabled(true);
 					Controls.ChooseReligionNameButton:SetDisabled(true);
 					Controls.ChooseReligionName:SetText(religionName);

@@ -37,11 +37,11 @@ UPDATE BeliefClasses SET MaxInReligion = 1, AdoptionOrder = 2 WHERE BeliefClassT
 -- ------------------------------------
 -- ------------------------------------
 INSERT INTO Types (Type, Kind)
-  WITH counter as (SELECT 1 x UNION SELECT x + 1 FROM counter WHERE x < 39) 
+  WITH counter as (SELECT 1 x UNION SELECT x + 1 FROM counter WHERE x < 40) 
   SELECT 'SDG_FOLLOWER' || x, 'KIND_BELIEF' FROM counter ;
 
 INSERT INTO Beliefs (BeliefType, Name, Description, BeliefClassType)
-  WITH counter as (SELECT 1 x UNION SELECT x + 1 FROM counter WHERE x < 39) 
+  WITH counter as (SELECT 1 x UNION SELECT x + 1 FROM counter WHERE x < 40) 
   SELECT 'SDG_FOLLOWER' || x, 'LOC_SDG_FOLLOWER' || x, 'LOC_SDG_FOLLOWER' || x || '_DESCRIPTION', 'BELIEF_CLASS_FOLLOWER' FROM counter ;
 
 -- ------------------------------------
