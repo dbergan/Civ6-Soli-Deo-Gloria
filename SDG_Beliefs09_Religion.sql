@@ -89,7 +89,7 @@ UPDATE Beliefs SET BeliefClassType = 'SDG_BELIEF_CLASS_' || (SELECT cast(COUNT(B
 INSERT INTO BeliefModifiers (BeliefType, ModifierID) VALUES ('SDG_VICARS', 'SDG_VICARS_CITY_YIELD_PERCENT') ; 
 INSERT INTO Modifiers (ModifierId, ModifierType, SubjectRequirementSetId) VALUES ('SDG_VICARS_CITY_YIELD_PERCENT', 'DB_DM_CITIES_ADJUST_YIELD_PERCENT', 'CITY_FOLLOWS_RELIGION_REQUIREMENTS') ;
 INSERT INTO ModifierArguments (ModifierId, Name, Value) VALUES
-                              ('SDG_VICARS_CITY_YIELD_PERCENT', 'Amount', 12),
+                              ('SDG_VICARS_CITY_YIELD_PERCENT', 'Amount', 24),
 							  ('SDG_VICARS_CITY_YIELD_PERCENT', 'YieldType', 'YIELD_FAITH') ;
 
 
@@ -104,7 +104,7 @@ UPDATE Beliefs SET BeliefClassType = 'SDG_BELIEF_CLASS_' || (SELECT cast(COUNT(B
 INSERT INTO BeliefModifiers (BeliefType, ModifierID) VALUES ('SDG_DIOCESANS', 'SDG_DIOCESANS_PERCENT_FOR_FOLLOWERS') ; 
 INSERT INTO Modifiers (ModifierId, ModifierType, SubjectRequirementSetId) VALUES ('SDG_DIOCESANS_PERCENT_FOR_FOLLOWERS', 'DB_DM_CITIES_ADJUST_FOLLOWER_YIELD_PERCENT', 'CITY_FOLLOWS_RELIGION_REQUIREMENTS') ;
 INSERT INTO ModifierArguments (ModifierId, Name, Value) VALUES 
-                              ('SDG_DIOCESANS_PERCENT_FOR_FOLLOWERS', 'Amount', 1),
+                              ('SDG_DIOCESANS_PERCENT_FOR_FOLLOWERS', 'Amount', 2),
 							  ('SDG_DIOCESANS_PERCENT_FOR_FOLLOWERS', 'YieldType', 'YIELD_FAITH') ;
 							  
 

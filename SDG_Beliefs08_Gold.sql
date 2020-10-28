@@ -87,7 +87,7 @@ UPDATE Beliefs SET BeliefClassType = 'SDG_BELIEF_CLASS_' || (SELECT cast(COUNT(B
 INSERT INTO BeliefModifiers (BeliefType, ModifierID) VALUES ('SDG_GOSPEL_OF_WEALTH', 'SDG_GOSPEL_OF_WEALTH_CITY_YIELD_PERCENT') ; 
 INSERT INTO Modifiers (ModifierId, ModifierType, SubjectRequirementSetId) VALUES ('SDG_GOSPEL_OF_WEALTH_CITY_YIELD_PERCENT', 'DB_DM_CITIES_ADJUST_YIELD_PERCENT', 'CITY_FOLLOWS_RELIGION_REQUIREMENTS') ;
 INSERT INTO ModifierArguments (ModifierId, Name, Value) VALUES
-                              ('SDG_GOSPEL_OF_WEALTH_CITY_YIELD_PERCENT', 'Amount', 12),
+                              ('SDG_GOSPEL_OF_WEALTH_CITY_YIELD_PERCENT', 'Amount', 36),
 							  ('SDG_GOSPEL_OF_WEALTH_CITY_YIELD_PERCENT', 'YieldType', 'YIELD_GOLD') ;
 
 -- ------------------------------------
@@ -101,7 +101,7 @@ UPDATE Beliefs SET BeliefClassType = 'SDG_BELIEF_CLASS_' || (SELECT cast(COUNT(B
 INSERT INTO BeliefModifiers (BeliefType, ModifierID) VALUES ('SDG_TREASURES_IN_HEAVEN', 'SDG_TREASURES_IN_HEAVEN_PERCENT_FOR_FOLLOWERS') ; 
 INSERT INTO Modifiers (ModifierId, ModifierType, SubjectRequirementSetId) VALUES ('SDG_TREASURES_IN_HEAVEN_PERCENT_FOR_FOLLOWERS', 'DB_DM_CITIES_ADJUST_FOLLOWER_YIELD_PERCENT', 'CITY_FOLLOWS_RELIGION_REQUIREMENTS') ;
 INSERT INTO ModifierArguments (ModifierId, Name, Value) VALUES 
-                              ('SDG_TREASURES_IN_HEAVEN_PERCENT_FOR_FOLLOWERS', 'Amount', 1),
+                              ('SDG_TREASURES_IN_HEAVEN_PERCENT_FOR_FOLLOWERS', 'Amount', 3),
 							  ('SDG_TREASURES_IN_HEAVEN_PERCENT_FOR_FOLLOWERS', 'YieldType', 'YIELD_GOLD') ;
 
 
