@@ -272,7 +272,7 @@ INSERT OR REPLACE INTO LocalizedText
 
 ('LOC_SDG_READERS', 'Readers', 'en_US'),
 ('LOC_SDG_READERS_DESCRIPTION', '+2[ICON_Faith]Faith[NEWLINE]+2[ICON_Faith]Faith per 7 [ICON_CITIZEN]population[NEWLINE][in cities that follow this religion]', 'en_US'),
-('LOC_PEDIA_RELIGIONS_PAGE_SDG_READERS_CHAPTER_HISTORY_PARA_1', 'Licensed Lay Readers, whose prominence varies widely among dioceses and national churches, are licensed by their bishop. They are authorised to lead worship services, apart from the celebration of the Eucharist. Their responsibilities and privileges can include:[NEWLINE]Conducting Mattins, Evensong, and Compline[NEWLINE]Reciting the Litany[NEWLINE]Publishing banns of marriage[NEWLINE]Preaching, teaching, and assisting in pastoral care[NEWLINE]Conducting funerals[NEWLINE]Distributing (but not celebrating) Holy Communion', 'en_US'),
+('LOC_PEDIA_RELIGIONS_PAGE_SDG_READERS_CHAPTER_HISTORY_PARA_1', 'Lay Readers, whose prominence varies widely among dioceses and national churches, are licensed by their bishop. They are authorised to lead worship services, apart from the celebration of the Eucharist. Their responsibilities and privileges can include:[NEWLINE]Conducting Mattins, Evensong, and Compline[NEWLINE]Reciting the Litany[NEWLINE]Publishing banns of marriage[NEWLINE]Preaching, teaching, and assisting in pastoral care[NEWLINE]Conducting funerals[NEWLINE]Distributing (but not celebrating) Holy Communion', 'en_US'),
 
 ('LOC_SDG_DEACONS', 'Deacons', 'en_US'),
 ('LOC_SDG_DEACONS_DESCRIPTION', '+2[ICON_Faith]Faith[NEWLINE]+2[ICON_Faith]Faith for every 2 specialty districts[NEWLINE][in cities that follow this religion]', 'en_US'),
