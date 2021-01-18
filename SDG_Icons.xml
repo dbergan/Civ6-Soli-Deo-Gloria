@@ -27,6 +27,7 @@
 		<Row Name="ICON_SDG_JOSHUAS_TRUMPET"                Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="18" />
 		<Row Name="ICON_SDG_VENI_VIDI_VICI"                 Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="18" />
 		<Row Name="ICON_SDG_CARTHAGO_DELENDA_EST"           Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="18" />
+		<Row Name="ICON_SDG_SHATTER_THE_TEETH"			    Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="18" />
 		<Row Name="ICON_SDG_A_MIGHTY_FORTRESS"              Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="18" />
 		<Row Name="ICON_SDG_A_MEMORY_OF_SOLFERINO"          Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="18" />
 		<Row Name="ICON_SDG_ARMOR_OF_GOD"                   Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="18" />
