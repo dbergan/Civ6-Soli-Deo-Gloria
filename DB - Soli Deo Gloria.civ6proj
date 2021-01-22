@@ -5,7 +5,7 @@
     <Name>DB [ICON_Faith]Soli Deo Gloria[ICON_Faith]</Name>
     <Guid>511d5452-9a6a-4230-8bca-5364a5477cee</Guid>
     <ProjectGuid>{4c05eb77-6ea2-4d19-bcd7-4fff7aaa2a49}</ProjectGuid>
-    <ModVersion>21</ModVersion>
+    <ModVersion>22</ModVersion>
     <Teaser>Religion is competitive and way more fun</Teaser>
     <Description>[NEWLINE]- All players start with a (mortal) Great Prophet[NEWLINE]- Subsequent prophets add beliefs[NEWLINE]- Many new beliefs for all aspects of the game[NEWLINE]- All beliefs are shareable (no selfish "founder" beliefs)[NEWLINE]- No limits or "classes" of beliefs... add 20 to your religion[NEWLINE]- Additional Great Prophets[NEWLINE]- Lots of color and history[NEWLINE][NEWLINE]Read a description of all the changes here:[NEWLINE][NEWLINE]https://steamcommunity.com/sharedfiles/filedetails/?id=1529686382</Description>
     <AffectsSavedGames>true</AffectsSavedGames>
@@ -26,13 +26,16 @@
   <Reference type="Mod" title="[COLOR_FLOAT_CULTURE]Religion Expanded[ENDCOLOR]" id="c6775ded-6693-474a-ade5-b4c51d932bd8" />
   <Reference type="Mod" title="DB [ICON_Faith]All HS3 Buildings Available[ICON_Faith]" id="b767551f-8e70-4955-9928-1efd3950e7f1" />
 </Associations>]]></AssociationData>
-    <FrontEndActionData><![CDATA[<FrontEndActions><UpdateText id="NewAction"><Properties><LoadOrder>1</LoadOrder></Properties><File>LOC_SDG.sql</File></UpdateText></FrontEndActions>]]></FrontEndActionData>
+    <FrontEndActionData><![CDATA[<FrontEndActions><UpdateText id="LOC"><Properties><LoadOrder>1</LoadOrder></Properties><File>LOC_SDG.sql</File></UpdateText><UpdateDatabase id="GameSetup"><Properties><LoadOrder>9999999</LoadOrder></Properties><File>GameSetup.sql</File></UpdateDatabase></FrontEndActions>]]></FrontEndActionData>
     <CompatibleVersions>1.2,2.0</CompatibleVersions>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Default' ">
     <OutputPath>.</OutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="GameSetup.sql">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="LOC_SDG_FlavorQuotes.sql">
       <SubType>Content</SubType>
     </Content>
