@@ -1,0 +1,17 @@
+DELETE FROM MajorStartingUnits WHERE Era = 'ERA_ANCIENT' AND Unit != 'UNIT_SETTLER' ;
+UPDATE GlobalParameters SET Value = 0 WHERE Name = 'RELIGION_PANTHEON_MIN_FAITH' ;
+UPDATE Districts SET Cost = 0, PrereqCivic = NULL, PrereqTech = NULL ; -- WHERE DistrictType = 'DISTRICT_HOLY_SITE' OR DistrictType = 'DISTRICT_LAVRA' ;
+UPDATE Buildings SET Cost = 0, PrereqTech = NULL, PrereqCivic = NULL WHERE PrereqDistrict = 'DISTRICT_HOLY_SITE' ;
+UPDATE Units SET Cost = 0, PrereqTech = NULL, PrereqCivic = NULL WHERE PurchaseYield = 'YIELD_FAITH' AND MustPurchase = 1 ;
+-- UPDATE Policies SET PrereqCivic = NULL, PrereqTech = NULL WHERE PolicyType = 'POLICY_SCRIPTURE' OR PolicyType = 'POLICY_DISCIPLINE' ;
+UPDATE ModifierArguments SET Value = 30 WHERE ModifierId = 'REVELATION_GREATPROPHETPOINTS' AND Name = 'Amount' ;
+INSERT INTO Building_YieldChanges (BuildingType, YieldType, YieldChange) VALUES ('BUILDING_PALACE', 'YIELD_FOOD', 100) ;
+UPDATE Building_YieldChanges SET YieldChange = 1000 WHERE BuildingType = 'BUILDING_PALACE' AND YieldType = 'YIELD_GOLD' ;
+UPDATE Building_YieldChanges SET YieldChange = 10 WHERE BuildingType = 'BUILDING_PALACE' AND YieldType = 'YIELD_PRODUCTION' ;
+UPDATE Buildings SET Housing = 99, Entertainment = 99 WHERE BuildingType = 'BUILDING_PALACE' ;
+UPDATE Project_GreatPersonPoints SET Points = 30 WHERE ProjectType = 'PROJECT_ENHANCE_DISTRICT_HOLY_SITE' ;
+UPDATE Projects SET Cost = 1, CostProgressionParam1 = 0 WHERE ProjectType = 'PROJECT_ENHANCE_DISTRICT_HOLY_SITE' ;
+UPDATE Units SET Cost = 67000 WHERE UnitType = 'UNIT_SCOUT' ;
+-- UPDATE Civics SET Cost = 0 WHERE CivicType = 'CIVIC_CODE_OF_LAWS' ;
+-- UPDATE District_GreatPersonPoints SET PointsPerTurn = 61 WHERE GreatPersonClassType = 'GREAT_PERSON_CLASS_PROPHET' ;
+-- UPDATE Technologies SET Cost = 0 WHERE TechnologyType = 'TECH_ASTROLOGY' ;

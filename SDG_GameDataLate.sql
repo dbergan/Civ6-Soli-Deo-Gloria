@@ -1,2 +1,1 @@
 UPDATE GreatPersonIndividuals SET AreaHighlightRadius = 2 WHERE GreatPersonClassType = 'GREAT_PERSON_CLASS_PROPHET' ;
--- UPDATE Religions SET RequiresCustomName = 1 WHERE ReligionType != 'RELIGION_PANTHEON' AND 1 IN (SELECT SDG_ALL_RELIGIONS_CUSTOM FROM Parameters) ;
