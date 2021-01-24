@@ -55,7 +55,7 @@ ChangeableAfterGameStart, ChangeableAfterPlayByCloudMatchCreate, SortIndex) VALU
 0, 0, 329),
 
 
-('SDG_ALL_CUSTOM_NAMES', 'All Custom Names', 'The names for all relgions can be customized, but the AI chooses blank names[NEWLINE][NEWLINE][COLOR_Red]from mod "Soli Deo Gloria"[ENDCOLOR]', 
+('SDG_ALL_CUSTOM_NAMES', 'All Religions Can Have Custom Names', 'The names for all relgions can be customized, but the AI chooses blank names[NEWLINE][NEWLINE][COLOR_Red]from mod "Soli Deo Gloria"[ENDCOLOR]', 
 'bool', 0, 'Game', 'SDG_ALL_CUSTOM_NAMES', 'AdvancedOptions', 1, 0, 
 1, 1, 1, 1, 1, 
 0, 0, 340),
