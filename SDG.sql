@@ -312,7 +312,7 @@ INSERT INTO TraitModifiers (TraitType, ModifierId) VALUES
 -- Warrior Monks no longer require a belief. (Otherwise the AI always wastes a belief on this.)
 -- ------------------------------------
 -- ------------------------------------
-UPDATE Units SET EnabledByReligion = 0 WHERE UnitType = 'UNIT_WARRIOR_MONK' ;
+UPDATE Units SET EnabledByReligion = 0, PrereqCivic = 'CIVIC_THEOLOGY' WHERE UnitType = 'UNIT_WARRIOR_MONK' ;
 
 
 

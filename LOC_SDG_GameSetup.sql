@@ -34,7 +34,7 @@ INSERT OR REPLACE INTO LocalizedText
 ('LOC_SDG_KOTOKUIN_TO_THEOLGY_DESC', 'Kotoku-In (wonder) moves from the Divine Right civic to the Theology civic and its production cost changes from 710 to 400{LOC_SDG_MOD_NOTE}', 'en_US'),
 
 ('LOC_SDG_ALL_CUSTOM_NAMES_NAME', 'All Religions Can Have Custom Names', 'en_US'),
-('LOC_SDG_ALL_CUSTOM_NAMES_DESC', 'The names for all relgions can be customized, but the AI chooses blank names{LOC_SDG_MOD_NOTE}', 'en_US'),
+('LOC_SDG_ALL_CUSTOM_NAMES_DESC', 'The names for all religions can be customized, but the AI chooses blank names{LOC_SDG_MOD_NOTE}', 'en_US'),
 
 ('LOC_SDG_DOUBLE_BELIEFS_NAME', 'Double Beliefs', 'en_US'),
 ('LOC_SDG_DOUBLE_BELIEFS_DESC', 'Players get 2 beliefs for each Great Prophet instead of just 1{LOC_SDG_MOD_NOTE}', 'en_US'),

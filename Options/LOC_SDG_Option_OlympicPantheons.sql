@@ -29,7 +29,7 @@ INSERT OR REPLACE INTO LocalizedText
 ('LOC_OP_ABILITY_ARES_FOREIGN_STRENGTH_DESCRIPTION', 'Land military units in foreign territory: +6[ICON_STRENGTH]/[ICON_Ranged]/[ICON_Bombard] when attacking', 'en_US'),
 ('LOC_OP_ARES_FOREIGN_STRENGTH_COMBAT_DESCRIPTION', '+{1_Value} Ares', 'en_US'),
 ('LOC_OP_ABILITY_ARES_FAITH_ON_KILL_NAME', 'Ares: Faith on Kill', 'en_US'),
-('LOC_OP_ABILITY_ARES_FAITH_ON_KILL_DESCRIPTION', 'Land military units in foreign territory:Kills give you [ICON_Faith] according to the defeated unit''s base', 'en_US'),
+('LOC_OP_ABILITY_ARES_FAITH_ON_KILL_DESCRIPTION', 'Land military units in foreign territory: Kills give you [ICON_Faith] according to the defeated unit''s base', 'en_US'),
 ('LOC_PEDIA_RELIGIONS_PAGE_OP_ARES_CHAPTER_HISTORY_PARA_1', 'Ares is the god of war; son of Zeus and Hera. In Greek literature, he often represents the physical or violent and untamed aspect of war, in contrast to his sister, the armored Athena, whose functions as a goddess of intelligence include military strategy and generalship.[NEWLINE][NEWLINE]The Greeks were ambivalent toward Ares: although he embodied the physical valor necessary for success in war, he was a dangerous force, "overwhelming, insatiable in battle, destructive, and man-slaughtering."', 'en_US'),
 
 
