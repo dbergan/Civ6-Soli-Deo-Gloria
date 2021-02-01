@@ -831,7 +831,7 @@ INSERT OR IGNORE INTO ModifierArguments (ModifierId, Name, Value) VALUES
 -- ------------------------------------
 INSERT OR IGNORE INTO Types (Type, Kind) VALUES ('OP_HESTIA', 'KIND_BELIEF') ; 
 INSERT OR IGNORE INTO Beliefs (BeliefType, Name, Description, BeliefClassType) VALUES ('OP_HESTIA', 'LOC_OP_HESTIA', 'LOC_OP_HESTIA_DESCRIPTION', 'BELIEF_CLASS_PANTHEON') ;
---    1 GOLD on FOREST
+--    2 GOLD on FOREST
 INSERT OR IGNORE INTO BeliefModifiers (BeliefType, ModifierID) VALUES 
                             ('OP_HESTIA', 'OP_HESTIA_GOLD_CITY_APPLIES_MODIFIER') ;
 INSERT OR IGNORE INTO Modifiers (ModifierId, ModifierType, SubjectRequirementSetId) VALUES 
@@ -842,7 +842,7 @@ INSERT OR IGNORE INTO Modifiers (ModifierId, ModifierType, SubjectRequirementSet
                       ('OP_HESTIA_GOLD_INCREASES_ON_FOREST', 'MODIFIER_CITY_PLOT_YIELDS_ADJUST_PLOT_YIELD', 'DB_REQSET_HAS_FOREST') ;
 INSERT OR IGNORE INTO ModifierArguments (ModifierId, Name, Value) VALUES
 							  ('OP_HESTIA_GOLD_INCREASES_ON_FOREST', 'YieldType', 'YIELD_GOLD'),
-							  ('OP_HESTIA_GOLD_INCREASES_ON_FOREST', 'Amount', 1) ;
+							  ('OP_HESTIA_GOLD_INCREASES_ON_FOREST', 'Amount', 2) ;
 --    Holy Site Adjacency
 INSERT OR IGNORE INTO BeliefModifiers (BeliefType, ModifierID) VALUES 
                             ('OP_HESTIA', 'OP_HESTIA_FOREST_HOLY_SITE_ADJACENCY') ;
@@ -853,7 +853,7 @@ INSERT OR IGNORE INTO ModifierArguments(ModifierId, Name, Value) VALUES
 							 ('OP_HESTIA_FOREST_HOLY_SITE_ADJACENCY', 'Description', 'LOC_OP_DISTRICT_FOREST_FAITH'),
 							 ('OP_HESTIA_FOREST_HOLY_SITE_ADJACENCY', 'FeatureType', 'FEATURE_FOREST'),
 							 ('OP_HESTIA_FOREST_HOLY_SITE_ADJACENCY', 'YieldType', 'YIELD_FAITH'),
-                             ('OP_HESTIA_FOREST_HOLY_SITE_ADJACENCY', 'Amount', 1) ;
+                             ('OP_HESTIA_FOREST_HOLY_SITE_ADJACENCY', 'Amount', 2) ;
 							 
 
 
@@ -893,7 +893,7 @@ VALUES
 ('OP_REQSET_PAN_PLOTS',	'OP_REQ_HAS_FLOODPLAINS_PLAINS')
 ;
 
---    2 CULTURE on REEDS
+--    1 CULTURE on REEDS
 INSERT OR IGNORE INTO BeliefModifiers (BeliefType, ModifierID) VALUES 
                             ('OP_PAN', 'OP_PAN_CULTURE_CITY_APPLIES_MODIFIER') ;
 INSERT OR IGNORE INTO Modifiers (ModifierId, ModifierType, SubjectRequirementSetId) VALUES 
@@ -904,7 +904,7 @@ INSERT OR IGNORE INTO Modifiers (ModifierId, ModifierType, SubjectRequirementSet
                       ('OP_PAN_CULTURE_INCREASES_ON_REEDS', 'MODIFIER_CITY_PLOT_YIELDS_ADJUST_PLOT_YIELD', 'OP_REQSET_PAN_PLOTS') ;
 INSERT OR IGNORE INTO ModifierArguments (ModifierId, Name, Value) VALUES
 							  ('OP_PAN_CULTURE_INCREASES_ON_REEDS', 'YieldType', 'YIELD_CULTURE'),
-							  ('OP_PAN_CULTURE_INCREASES_ON_REEDS', 'Amount', 2) ;
+							  ('OP_PAN_CULTURE_INCREASES_ON_REEDS', 'Amount', 1) ;
 --    Holy Site Adjacency  //  FAITH for adjacent MARSH
 INSERT OR IGNORE INTO BeliefModifiers (BeliefType, ModifierID) VALUES 
                             ('OP_PAN', 'OP_PAN_MARSH_HOLY_SITE_ADJACENCY') ;
