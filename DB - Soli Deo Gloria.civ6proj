@@ -5,7 +5,7 @@
     <Name>DB [ICON_Faith]Soli Deo Gloria[ICON_Faith]</Name>
     <Guid>511d5452-9a6a-4230-8bca-5364a5477cee</Guid>
     <ProjectGuid>{4c05eb77-6ea2-4d19-bcd7-4fff7aaa2a49}</ProjectGuid>
-    <ModVersion>27</ModVersion>
+    <ModVersion>28</ModVersion>
     <Teaser>Religion is competitive and way more fun</Teaser>
     <Description>Overhaul of religion:[NEWLINE][ICON_Bullet]All players start with a (mortal) Great Prophet[NEWLINE][ICON_Bullet]Subsequent prophets add beliefs[NEWLINE][ICON_Bullet]Many new beliefs for all aspects of the game[NEWLINE][ICON_Bullet]All beliefs are shareable (no selfish "founder" beliefs)[NEWLINE][ICON_Bullet]No limits or "classes" of beliefs... add 20 to your religion[NEWLINE][ICON_Bullet]Additional Great Prophets[NEWLINE][ICON_Bullet]Lots of color and history[NEWLINE][NEWLINE]Game setup options for:[NEWLINE][ICON_Bullet]Olympic Pantheons[NEWLINE][ICON_Bullet]Remove Condemn Heretic[NEWLINE][ICON_Bullet]One-Cleanse Inquisitors[NEWLINE][ICON_Bullet]Inquisitors Don't Need An Inquisition[NEWLINE][ICON_Bullet]Inquisitors Purchased From Shrines[NEWLINE][ICON_Bullet]Religious Units Only 2 Movement[NEWLINE][ICON_Bullet]No Religious Sea Spies[NEWLINE][ICON_Bullet]All Level 3 Holy Site Buildings Available[NEWLINE][ICON_Bullet]Cathedrals Hold Reliics[NEWLINE][ICON_Bullet]Kotoku-In Moved To Theology[NEWLINE][ICON_Bullet]Custom Name Available For All Religions[NEWLINE][ICON_Bullet]Two Beliefs From Prophets[NEWLINE][ICON_Bullet]Religious Combat Doesn't Pressure Nearby Cities[NEWLINE][ICON_Bullet]Martyrs Lose 100 Combat Strength[NEWLINE][ICON_Bullet]Remove Heathen Conversion</Description>
     <AffectsSavedGames>true</AffectsSavedGames>
