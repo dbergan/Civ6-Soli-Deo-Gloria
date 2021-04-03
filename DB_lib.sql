@@ -9,20 +9,22 @@
 INSERT OR IGNORE INTO Tags 
 (Tag,							Vocabulary) 
 VALUES 
-('DB_CLASS_ALL',					'ABILITY_CLASS'),
-('DB_CLASS_ALL_COMBAT',				'ABILITY_CLASS'),
-('DB_CLASS_LAND_ALL',				'ABILITY_CLASS'),
-('DB_CLASS_LAND_COMBAT',			'ABILITY_CLASS'),
-('DB_CLASS_LAND_CAVALRY',			'ABILITY_CLASS'),
-('DB_CLASS_LAND_NON_CAVALRY',		'ABILITY_CLASS'),
-('DB_CLASS_NAVAL_COMBAT',			'ABILITY_CLASS'),
-('DB_CLASS_AIR_COMBAT',				'ABILITY_CLASS'),
-('DB_CLASS_LAND_MELEE_ATTACKER',	'ABILITY_CLASS'),
-('DB_CLASS_LAND_RANGED_ATTACKER',	'ABILITY_CLASS'),
-('DB_CLASS_LAND_BOMBARD_ATTACKER',	'ABILITY_CLASS'),
-('DB_CLASS_NAVAL_MELEE_ATTACKER',	'ABILITY_CLASS'),
-('DB_CLASS_NAVAL_RANGED_ATTACKER',	'ABILITY_CLASS'),
-('DB_CLASS_NAVAL_BOMBARD_ATTACKER', 'ABILITY_CLASS')
+('DB_CLASS_ALL',						'ABILITY_CLASS'),
+('DB_CLASS_ALL_COMBAT',					'ABILITY_CLASS'),
+('DB_CLASS_LAND_ALL',					'ABILITY_CLASS'),
+('DB_CLASS_LAND_COMBAT',				'ABILITY_CLASS'),
+('DB_CLASS_LAND_CAVALRY',				'ABILITY_CLASS'),
+('DB_CLASS_LAND_NON_CAVALRY',			'ABILITY_CLASS'),
+('DB_CLASS_LAND_MELEE_NON_CAVALRY',		'ABILITY_CLASS'),
+('DB_CLASS_NAVAL_ALL',					'ABILITY_CLASS'),
+('DB_CLASS_NAVAL_COMBAT',				'ABILITY_CLASS'),
+('DB_CLASS_AIR_COMBAT',					'ABILITY_CLASS'),
+('DB_CLASS_LAND_MELEE_ATTACKER',		'ABILITY_CLASS'),
+('DB_CLASS_LAND_RANGED_ATTACKER',		'ABILITY_CLASS'),
+('DB_CLASS_LAND_BOMBARD_ATTACKER',		'ABILITY_CLASS'),
+('DB_CLASS_NAVAL_MELEE_ATTACKER',		'ABILITY_CLASS'),
+('DB_CLASS_NAVAL_RANGED_ATTACKER',		'ABILITY_CLASS'),
+('DB_CLASS_NAVAL_BOMBARD_ATTACKER',		'ABILITY_CLASS')
 ;
 INSERT OR IGNORE INTO Tags (Tag, Vocabulary) 
   SELECT 'DB_CLASS_' || UnitType, 'ABILITY_CLASS' FROM Units ;
@@ -35,6 +37,8 @@ INSERT OR IGNORE INTO TypeTags (Type, Tag)
   SELECT UnitType, 'DB_CLASS_LAND_ALL' FROM Units WHERE Domain = 'DOMAIN_LAND' ;
 INSERT OR IGNORE INTO TypeTags (Type, Tag)
   SELECT UnitType, 'DB_CLASS_LAND_COMBAT' FROM Units WHERE (Combat > 0 OR RangedCombat > 0 OR Bombard > 0) AND FormationClass = 'FORMATION_CLASS_LAND_COMBAT' ;
+INSERT OR IGNORE INTO TypeTags (Type, Tag)
+  SELECT UnitType, 'DB_CLASS_NAVAL_ALL' FROM Units WHERE Domain = 'DOMAIN_SEA' ;
 INSERT OR IGNORE INTO TypeTags (Type, Tag)
   SELECT UnitType, 'DB_CLASS_NAVAL_COMBAT' FROM Units WHERE (Combat > 0 OR RangedCombat > 0 OR Bombard > 0) AND FormationClass = 'FORMATION_CLASS_NAVAL' ;
 INSERT OR IGNORE INTO TypeTags (Type, Tag)
@@ -49,6 +53,8 @@ INSERT OR IGNORE INTO TypeTags (Type, Tag)
   SELECT UnitType, 'DB_CLASS_LAND_CAVALRY' FROM Units WHERE FormationClass = 'FORMATION_CLASS_LAND_COMBAT' AND PromotionClass LIKE '%CAVALRY%' AND PromotionClass NOT LIKE '%ANTI_CAVALRY%' ;
 INSERT OR IGNORE INTO TypeTags (Type, Tag)
   SELECT UnitType, 'DB_CLASS_LAND_NON_CAVALRY' FROM Units WHERE FormationClass = 'FORMATION_CLASS_LAND_COMBAT' AND (PromotionClass LIKE '%ANTI_CAVALRY%' OR PromotionClass NOT LIKE '%CAVALRY%') ;
+INSERT OR IGNORE INTO TypeTags (Type, Tag)
+  SELECT UnitType, 'DB_CLASS_LAND_MELEE_NON_CAVALRY' FROM Units WHERE FormationClass = 'FORMATION_CLASS_LAND_COMBAT' AND Combat > 0 AND RangedCombat = 0 AND Bombard = 0 AND (PromotionClass LIKE '%ANTI_CAVALRY%' OR PromotionClass NOT LIKE '%CAVALRY%') ;
 INSERT OR IGNORE INTO TypeTags (Type, Tag)
   SELECT UnitType, 'DB_CLASS_NAVAL_MELEE_ATTACKER' FROM Units WHERE FormationClass = 'FORMATION_CLASS_NAVAL' AND Combat > 0 AND RangedCombat = 0 AND Bombard = 0 ;
 INSERT OR IGNORE INTO TypeTags (Type, Tag)
@@ -299,9 +305,74 @@ INSERT OR IGNORE INTO Requirements (RequirementId, RequirementType)
 INSERT OR IGNORE INTO RequirementArguments (RequirementId, Name, Value) 
   SELECT 'DB_REQ_CITY_HAS_' || SUBSTR(DistrictType, 10) || '_AND_FOLLOWS_RELIGION', 'RequirementSetId', 'DB_REQSET_CITY_HAS_' || SUBSTR(DistrictType, 10) || '_AND_FOLLOWS_RELIGION' FROM Districts WHERE TraitType IS NULL ;
 
+-- City has X terrain type (DB_REQ_CITY_HAS_2_DESERT, DB_REQSET_CITY_HAS_2_DESERT)
+--  Currently just does deserts because that's the only terrain I'm interested in for this. Modify the where clauses to include other terrains. (Without the where clause it creates over a thousand unnecessary requirements.)
+INSERT OR IGNORE INTO Requirements (RequirementId, RequirementType)
+  WITH counter as (SELECT 1 x UNION SELECT x + 1 FROM counter WHERE x < 37) 
+  SELECT 'DB_REQ_CITY_HAS_' || x || '_' || SUBSTR(TerrainType, 9), 'REQUIREMENT_CITY_HAS_X_TERRAIN_TYPE' FROM counter LEFT JOIN Terrains WHERE TerrainType LIKE '%DESERT%' ;
+
+INSERT OR IGNORE INTO RequirementArguments (RequirementId, Name, Value)
+  WITH counter as (SELECT 1 x UNION SELECT x + 1 FROM counter WHERE x < 37) 
+  SELECT 'DB_REQ_CITY_HAS_' || x || '_' || SUBSTR(TerrainType, 9), 'TerrainType', TerrainType FROM counter LEFT JOIN Terrains WHERE TerrainType LIKE '%DESERT%' ;
+
+INSERT OR IGNORE INTO RequirementArguments (RequirementId, Name, Value)
+  WITH counter as (SELECT 1 x UNION SELECT x + 1 FROM counter WHERE x < 37) 
+  SELECT 'DB_REQ_CITY_HAS_' || x || '_' || SUBSTR(TerrainType, 9), 'Hills', 0 FROM counter LEFT JOIN Terrains WHERE TerrainType LIKE '%DESERT%' ;
+
+INSERT OR IGNORE INTO RequirementArguments (RequirementId, Name, Value)
+  WITH counter as (SELECT 1 x UNION SELECT x + 1 FROM counter WHERE x < 37) 
+  SELECT 'DB_REQ_CITY_HAS_' || x || '_' || SUBSTR(TerrainType, 9), 'Amount', x FROM counter LEFT JOIN Terrains WHERE TerrainType LIKE '%DESERT%' ;
+
+INSERT OR IGNORE INTO RequirementSets (RequirementSetId, RequirementSetType)
+  WITH counter as (SELECT 1 x UNION SELECT x + 1 FROM counter WHERE x < 37) 
+  SELECT 'DB_REQSET_CITY_HAS_' || x || '_' || SUBSTR(TerrainType, 9), 'REQUIREMENTSET_TEST_ALL' FROM counter LEFT JOIN Terrains WHERE TerrainType LIKE '%DESERT%' ;
+
+INSERT OR IGNORE INTO RequirementSetRequirements (RequirementSetId, RequirementId)
+  WITH counter as (SELECT 1 x UNION SELECT x + 1 FROM counter WHERE x < 37) 
+  SELECT 'DB_REQSET_CITY_HAS_' || x || '_' || SUBSTR(TerrainType, 9), 'DB_REQ_CITY_HAS_' || x || '_' || SUBSTR(TerrainType, 9) FROM counter LEFT JOIN Terrains WHERE TerrainType LIKE '%DESERT%' ;
 
 
+-- City has X terrain type, including hill versions (DB_REQ_CITY_HAS_2_DESERT_OR_DESERT_HILLS, DB_REQSET_CITY_HAS_2_DESERT_OR_DESERT_HILLS)
+--  Currently just does deserts because that's the only terrain I'm interested in for this. Modify the where clauses to include other terrains. (Without the where clause it creates over a thousand unnecessary requirements.)
+INSERT OR IGNORE INTO Requirements (RequirementId, RequirementType)
+  WITH counter as (SELECT 1 x UNION SELECT x + 1 FROM counter WHERE x < 37) 
+  SELECT 'DB_REQ_CITY_HAS_' || x || '_' || SUBSTR(TerrainType, 9) || '_OR_' || SUBSTR(TerrainType, 9) || '_HILLS', 'REQUIREMENT_CITY_HAS_X_TERRAIN_TYPE' FROM counter LEFT JOIN Terrains WHERE TerrainType NOT LIKE '%HILLS%' AND TerrainType NOT LIKE '%MOUNTAIN%' AND TerrainType LIKE '%DESERT%' ;
 
+INSERT OR IGNORE INTO RequirementArguments (RequirementId, Name, Value)
+  WITH counter as (SELECT 1 x UNION SELECT x + 1 FROM counter WHERE x < 37) 
+  SELECT 'DB_REQ_CITY_HAS_' || x || '_' || SUBSTR(TerrainType, 9) || '_OR_' || SUBSTR(TerrainType, 9) || '_HILLS', 'TerrainType', TerrainType FROM counter LEFT JOIN Terrains WHERE TerrainType NOT LIKE '%HILLS%' AND TerrainType NOT LIKE '%MOUNTAIN%' AND TerrainType LIKE '%DESERT%' ;
+
+INSERT OR IGNORE INTO RequirementArguments (RequirementId, Name, Value)
+  WITH counter as (SELECT 1 x UNION SELECT x + 1 FROM counter WHERE x < 37) 
+  SELECT 'DB_REQ_CITY_HAS_' || x || '_' || SUBSTR(TerrainType, 9) || '_OR_' || SUBSTR(TerrainType, 9) || '_HILLS', 'Hills', 1 FROM counter LEFT JOIN Terrains WHERE TerrainType NOT LIKE '%HILLS%' AND TerrainType NOT LIKE '%MOUNTAIN%' AND TerrainType LIKE '%DESERT%' ;
+
+	-- For some reason, the "Amount" argument is off by 1. When Value is set to 2/4/6 the requirement is actually satisfied with 1/3/5 matching tiles... thus why this query sets the Value to x + 1
+INSERT OR IGNORE INTO RequirementArguments (RequirementId, Name, Value)
+  WITH counter as (SELECT 1 x UNION SELECT x + 1 FROM counter WHERE x < 37) 
+  SELECT 'DB_REQ_CITY_HAS_' || x || '_' || SUBSTR(TerrainType, 9) || '_OR_' || SUBSTR(TerrainType, 9) || '_HILLS', 'Amount', x + 1 FROM counter LEFT JOIN Terrains WHERE TerrainType NOT LIKE '%HILLS%' AND TerrainType NOT LIKE '%MOUNTAIN%' AND TerrainType LIKE '%DESERT%' ;
+
+INSERT OR IGNORE INTO RequirementSets (RequirementSetId, RequirementSetType)
+  WITH counter as (SELECT 1 x UNION SELECT x + 1 FROM counter WHERE x < 37) 
+  SELECT 'DB_REQSET_CITY_HAS_' || x || '_' || SUBSTR(TerrainType, 9) || '_OR_' || SUBSTR(TerrainType, 9) || '_HILLS', 'REQUIREMENTSET_TEST_ALL' FROM counter LEFT JOIN Terrains WHERE TerrainType NOT LIKE '%HILLS%' AND TerrainType NOT LIKE '%MOUNTAIN%' AND TerrainType LIKE '%DESERT%' ;
+
+INSERT OR IGNORE INTO RequirementSetRequirements (RequirementSetId, RequirementId)
+  WITH counter as (SELECT 1 x UNION SELECT x + 1 FROM counter WHERE x < 37) 
+  SELECT 'DB_REQSET_CITY_HAS_' || x || '_' || SUBSTR(TerrainType, 9) || '_OR_' || SUBSTR(TerrainType, 9) || '_HILLS', 'DB_REQ_CITY_HAS_' || x || '_' || SUBSTR(TerrainType, 9) || '_OR_' || SUBSTR(TerrainType, 9) || '_HILLS' FROM counter LEFT JOIN Terrains WHERE TerrainType NOT LIKE '%HILLS%' AND TerrainType NOT LIKE '%MOUNTAIN%' AND TerrainType LIKE '%DESERT%' ;
+
+
+-- Follows religion AND has X terrain type, including hill versions (DB_REQSET_CITY_FOLLOWS_RELIGION_AND_HAS_2_DESERT_OR_DESERT_HILLS)
+--  Currently just does deserts because that's the only terrain I'm interested in for this. Modify the where clauses to include other terrains. (Without the where clause it creates over a thousand unnecessary requirements.)
+INSERT OR IGNORE INTO RequirementSets (RequirementSetId, RequirementSetType)
+  WITH counter as (SELECT 1 x UNION SELECT x + 1 FROM counter WHERE x < 37) 
+  SELECT 'DB_REQSET_CITY_FOLLOWS_RELIGION_AND_HAS_' || x || '_' || SUBSTR(TerrainType, 9) || '_OR_' || SUBSTR(TerrainType, 9) || '_HILLS', 'REQUIREMENTSET_TEST_ALL' FROM counter LEFT JOIN Terrains WHERE TerrainType NOT LIKE '%HILLS%' AND TerrainType NOT LIKE '%MOUNTAIN%' AND TerrainType LIKE '%DESERT%' ;
+
+INSERT OR IGNORE INTO RequirementSetRequirements (RequirementSetId, RequirementId)
+  WITH counter as (SELECT 1 x UNION SELECT x + 1 FROM counter WHERE x < 37) 
+  SELECT 'DB_REQSET_CITY_FOLLOWS_RELIGION_AND_HAS_' || x || '_' || SUBSTR(TerrainType, 9) || '_OR_' || SUBSTR(TerrainType, 9) || '_HILLS', 'DB_REQ_CITY_HAS_' || x || '_' || SUBSTR(TerrainType, 9) || '_OR_' || SUBSTR(TerrainType, 9) || '_HILLS' FROM counter LEFT JOIN Terrains WHERE TerrainType NOT LIKE '%HILLS%' AND TerrainType NOT LIKE '%MOUNTAIN%' AND TerrainType LIKE '%DESERT%' ;
+
+INSERT OR IGNORE INTO RequirementSetRequirements (RequirementSetId, RequirementId)
+  WITH counter as (SELECT 1 x UNION SELECT x + 1 FROM counter WHERE x < 37) 
+  SELECT 'DB_REQSET_CITY_FOLLOWS_RELIGION_AND_HAS_' || x || '_' || SUBSTR(TerrainType, 9) || '_OR_' || SUBSTR(TerrainType, 9) || '_HILLS', 'REQUIRES_CITY_FOLLOWS_RELIGION' FROM counter LEFT JOIN Terrains WHERE TerrainType NOT LIKE '%HILLS%' AND TerrainType NOT LIKE '%MOUNTAIN%' AND TerrainType LIKE '%DESERT%' ;
 
 
 -- District is... (DB_REQ_IS_HOLY_SITE, DB_REQSET_IS_HOLY_SITE)
@@ -326,7 +397,7 @@ INSERT OR IGNORE INTO RequirementSetRequirements (RequirementSetId, RequirementI
   SELECT 'DB_REQSET_NEXT_TO_' || SUBSTR(DistrictType, 10), 'DB_REQ_NEXT_TO_' || SUBSTR(DistrictType, 10) FROM Districts WHERE TraitType IS NULL ;
 
 
--- District is X and next to Y (DB_REQ_IS_CAMPUS_NEXT_TO_HOLY_SITE, DB_REQSET_IS_CAMPUS_NEXT_TO_HOLY_SITE)
+-- District is X and next to district Y (DB_REQ_IS_CAMPUS_NEXT_TO_HOLY_SITE, DB_REQSET_IS_CAMPUS_NEXT_TO_HOLY_SITE)
 INSERT OR IGNORE INTO RequirementSets (RequirementSetId, RequirementSetType) 
   SELECT 'DB_REQSET_IS_' || SUBSTR(a.DistrictType, 10) || '_NEXT_TO_' || SUBSTR(b.DistrictType, 10), 'REQUIREMENTSET_TEST_ALL' FROM Districts AS a LEFT JOIN Districts AS b WHERE a.TraitType IS NULL AND b.TraitType IS NULL ;
 INSERT OR IGNORE INTO RequirementSetRequirements (RequirementSetId, RequirementId) 
@@ -347,6 +418,33 @@ INSERT OR IGNORE INTO RequirementSets (RequirementSetId, RequirementSetType)
   SELECT 'DB_REQSET_IS_' || SUBSTR(TerrainType, 9), 'REQUIREMENTSET_TEST_ALL' FROM Terrains ;
 INSERT OR IGNORE INTO RequirementSetRequirements (RequirementSetId, RequirementId)
   SELECT 'DB_REQSET_IS_' || SUBSTR(TerrainType, 9), 'DB_REQ_IS_' || SUBSTR(TerrainType, 9) FROM Terrains ;
+
+-- Plot is next to terrain (DB_REQ_IS_NEXT_TO_PLAINS, DB_REQSET_IS_NEXT_TO_PLAINS)
+INSERT OR IGNORE INTO Requirements (RequirementId, RequirementType)
+  SELECT 'DB_REQ_IS_NEXT_TO_' || SUBSTR(TerrainType, 9), 'REQUIREMENT_PLOT_ADJACENT_TERRAIN_TYPE_MATCHES' FROM Terrains ;
+INSERT OR IGNORE INTO RequirementArguments (RequirementId, Name, Value)
+  SELECT 'DB_REQ_IS_NEXT_TO_' || SUBSTR(TerrainType, 9), 'TerrainType', TerrainType FROM Terrains ;
+INSERT OR IGNORE INTO RequirementArguments (RequirementId, Name, Value)
+  SELECT 'DB_REQ_IS_NEXT_TO_' || SUBSTR(TerrainType, 9), 'MinRange', 0 FROM Terrains ;
+INSERT OR IGNORE INTO RequirementArguments (RequirementId, Name, Value)
+  SELECT 'DB_REQ_IS_NEXT_TO_' || SUBSTR(TerrainType, 9), 'MaxRange', 1 FROM Terrains ;
+INSERT OR IGNORE INTO RequirementSets (RequirementSetId, RequirementSetType)
+  SELECT 'DB_REQSET_IS_NEXT_TO_' || SUBSTR(TerrainType, 9), 'REQUIREMENTSET_TEST_ALL' FROM Terrains ;
+INSERT OR IGNORE INTO RequirementSetRequirements (RequirementSetId, RequirementId)
+  SELECT 'DB_REQSET_IS_NEXT_TO_' || SUBSTR(TerrainType, 9), 'DB_REQ_IS_NEXT_TO_' || SUBSTR(TerrainType, 9) FROM Terrains ;
+
+-- Plot is terrain X or next to terrain X (DB_REQ_IS_PLAINS_OR_NEXT_TO_PLAINS, DB_REQSET_IS_PLAINS_OR_NEXT_TO_PLAINS) [[NOT TESTED]]
+INSERT OR IGNORE INTO RequirementSets (RequirementSetId, RequirementSetType)
+  SELECT 'DB_REQSET_IS_'  || SUBSTR(TerrainType, 9) || '_OR_NEXT_TO_' || SUBSTR(TerrainType, 9), 'REQUIREMENTSET_TEST_ANY' FROM Terrains ;
+INSERT OR IGNORE INTO RequirementSetRequirements (RequirementSetId, RequirementId)
+  SELECT 'DB_REQSET_IS_'  || SUBSTR(TerrainType, 9) || '_OR_NEXT_TO_' || SUBSTR(TerrainType, 9), 'DB_REQ_IS_' || SUBSTR(TerrainType, 9) FROM Terrains ;
+INSERT OR IGNORE INTO RequirementSetRequirements (RequirementSetId, RequirementId)
+  SELECT 'DB_REQSET_IS_'  || SUBSTR(TerrainType, 9) || '_OR_NEXT_TO_' || SUBSTR(TerrainType, 9), 'DB_REQ_IS_NEXT_TO_' || SUBSTR(TerrainType, 9) FROM Terrains ;
+INSERT OR IGNORE INTO Requirements (RequirementId, RequirementType) 
+  SELECT 'DB_REQ_IS_' || SUBSTR(TerrainType, 9) || '_OR_NEXT_TO_' || SUBSTR(TerrainType, 9), 'REQUIREMENT_REQUIREMENTSET_IS_MET' FROM Terrains ;
+INSERT OR IGNORE INTO RequirementArguments (RequirementId, Name, Value) 
+  SELECT 'DB_REQ_IS_' || SUBSTR(TerrainType, 9) || '_OR_NEXT_TO_' || SUBSTR(TerrainType, 9), 'RequirementSetId', 'DB_REQSET_IS_'  || SUBSTR(TerrainType, 9) || '_OR_NEXT_TO_' || SUBSTR(TerrainType, 9) FROM Terrains ;
+
 
 -- Plot is terrain X and is next to district Y (DB_REQ_IS_PLAINS_NEXT_TO_HOLY_SITE, DB_REQSET_IS_PLAINS_NEXT_TO_HOLY_SITE)
 INSERT OR IGNORE INTO RequirementSets (RequirementSetId, RequirementSetType) 
@@ -369,6 +467,29 @@ INSERT OR IGNORE INTO Requirements (RequirementId, RequirementType)
   SELECT 'DB_REQ_IS_ANY_' || SUBSTR(TerrainType, 9), 'REQUIREMENT_REQUIREMENTSET_IS_MET' FROM Terrains WHERE TerrainType NOT LIKE '%HILLS%' AND TerrainType NOT LIKE '%MOUNTAIN%' ;
 INSERT OR IGNORE INTO RequirementArguments (RequirementId, Name, Value)
   SELECT 'DB_REQ_IS_ANY_' || SUBSTR(TerrainType, 9), 'RequirementSetId', 'DB_REQSET_IS_ANY_' || SUBSTR(TerrainType, 9) FROM Terrains WHERE TerrainType NOT LIKE '%HILLS%' AND TerrainType NOT LIKE '%MOUNTAIN%' ;
+
+-- Plot is next to any terrain of a certain type (DB_REQ_IS_NEXT_TO_ANY_PLAINS, DB_REQSET_IS_NEXT_TO_ANY_PLAINS) [[NOT TESTED]]
+INSERT OR IGNORE INTO RequirementSets (RequirementSetId, RequirementSetType)
+  SELECT 'DB_REQSET_IS_NEXT_TO_ANY_' || SUBSTR(TerrainType, 9), 'REQUIREMENTSET_TEST_ANY' FROM Terrains WHERE TerrainType NOT LIKE '%HILLS%' AND TerrainType NOT LIKE '%MOUNTAIN%' ;
+INSERT OR IGNORE INTO RequirementSetRequirements (RequirementSetId, RequirementId)
+  SELECT 'DB_REQSET_IS_NEXT_TO_ANY_' || SUBSTR(TerrainType, 9), 'DB_REQ_IS_NEXT_TO_' || SUBSTR(TerrainType, 9) FROM Terrains WHERE TerrainType NOT LIKE '%HILLS%' AND TerrainType NOT LIKE '%MOUNTAIN%' ;
+INSERT OR IGNORE INTO Requirements (RequirementId, RequirementType)
+  SELECT 'DB_REQ_IS_NEXT_TO_ANY_' || SUBSTR(TerrainType, 9), 'REQUIREMENT_REQUIREMENTSET_IS_MET' FROM Terrains WHERE TerrainType NOT LIKE '%HILLS%' AND TerrainType NOT LIKE '%MOUNTAIN%' ;
+INSERT OR IGNORE INTO RequirementArguments (RequirementId, Name, Value)
+  SELECT 'DB_REQ_IS_NEXT_TO_ANY_' || SUBSTR(TerrainType, 9), 'RequirementSetId', 'DB_REQSET_IS_NEXT_TO_ANY_' || SUBSTR(TerrainType, 9) FROM Terrains WHERE TerrainType NOT LIKE '%HILLS%' AND TerrainType NOT LIKE '%MOUNTAIN%' ;
+
+-- Plot is terrain of a certain type or next to terrain of that type (DB_REQ_IS_ANY_PLAINS_OR_NEXT_TO_ANY_PLAINS, DB_REQSET_IS_ANY_PLAINS_OR_NEXT_TO_ANY_PLAINS) [[NOT TESTED]]
+INSERT OR IGNORE INTO RequirementSets (RequirementSetId, RequirementSetType)
+  SELECT 'DB_REQSET_IS_ANY_' || SUBSTR(TerrainType, 9) || '_OR_NEXT_TO_ANY_' || SUBSTR(TerrainType, 9), 'REQUIREMENTSET_TEST_ANY' FROM Terrains WHERE TerrainType NOT LIKE '%HILLS%' AND TerrainType NOT LIKE '%MOUNTAIN%' ;
+INSERT OR IGNORE INTO RequirementSetRequirements (RequirementSetId, RequirementId)
+  SELECT 'DB_REQSET_IS_ANY_' || SUBSTR(TerrainType, 9) || '_OR_NEXT_TO_ANY_' || SUBSTR(TerrainType, 9), 'DB_REQ_IS_ANY_' || SUBSTR(TerrainType, 9) FROM Terrains WHERE TerrainType NOT LIKE '%HILLS%' AND TerrainType NOT LIKE '%MOUNTAIN%' ;
+INSERT OR IGNORE INTO RequirementSetRequirements (RequirementSetId, RequirementId)
+  SELECT 'DB_REQSET_IS_ANY_' || SUBSTR(TerrainType, 9) || '_OR_NEXT_TO_ANY_' || SUBSTR(TerrainType, 9), 'DB_REQ_IS_NEXT_TO_ANY_' || SUBSTR(TerrainType, 9) FROM Terrains WHERE TerrainType NOT LIKE '%HILLS%' AND TerrainType NOT LIKE '%MOUNTAIN%' ;
+INSERT OR IGNORE INTO Requirements (RequirementId, RequirementType)
+  SELECT 'DB_REQ_IS_ANY_' || SUBSTR(TerrainType, 9) || '_OR_NEXT_TO_ANY_' || SUBSTR(TerrainType, 9), 'REQUIREMENT_REQUIREMENTSET_IS_MET' FROM Terrains WHERE TerrainType NOT LIKE '%HILLS%' AND TerrainType NOT LIKE '%MOUNTAIN%' ;
+INSERT OR IGNORE INTO RequirementArguments (RequirementId, Name, Value)
+  SELECT 'DB_REQ_IS_ANY_' || SUBSTR(TerrainType, 9) || '_OR_NEXT_TO_ANY_' || SUBSTR(TerrainType, 9), 'RequirementSetId', 'DB_REQSET_IS_ANY_' || SUBSTR(TerrainType, 9) || '_OR_NEXT_TO_ANY_' || SUBSTR(TerrainType, 9) FROM Terrains WHERE TerrainType NOT LIKE '%HILLS%' AND TerrainType NOT LIKE '%MOUNTAIN%' ;
+
 
 -- Plot is terrain of a certain type X and is next to district Y (DB_REQ_IS_ANY_PLAINS_NEXT_TO_HOLY_SITE, DB_REQSET_IS_ANY_PLAINS_NEXT_TO_HOLY_SITE)
 INSERT OR IGNORE INTO RequirementSets (RequirementSetId, RequirementSetType) 
@@ -500,7 +621,16 @@ INSERT OR IGNORE INTO RequirementSets (RequirementSetId, RequirementSetType)
 INSERT OR IGNORE INTO RequirementSetRequirements (RequirementSetId, RequirementId)
   SELECT 'DB_REQSET_HAS_' || SUBSTR(ImprovementType, 13), 'DB_REQ_HAS_' || SUBSTR(ImprovementType, 13) FROM Improvements ;
 
--- Plot has improvement X and is next to district Y (DB_REQ_HAS_STONE_NEXT_TO_HOLY_SITE, DB_REQSET_HAS_STONE_NEXT_TO_HOLY_SITE)
+
+-- Plot has a standard resource improvement or industry/corporation (DB_REQSET_HAS_STANDARD_RESOURCE_IMPROVEMENT_OR_INDUSTRY_OR_CORPORATION, DB_REQ_HAS_STANDARD_RESOURCE_IMPROVEMENT_OR_INDUSTRY_OR_CORPORATION)
+INSERT OR IGNORE INTO RequirementSets (RequirementSetId, RequirementSetType) VALUES ('DB_REQSET_HAS_STANDARD_RESOURCE_IMPROVEMENT_OR_INDUSTRY_OR_CORPORATION', 'REQUIREMENTSET_TEST_ANY') ;
+INSERT OR IGNORE INTO RequirementSetRequirements (RequirementSetId, RequirementId)
+  SELECT DISTINCT 'DB_REQSET_HAS_STANDARD_RESOURCE_IMPROVEMENT_OR_INDUSTRY_OR_CORPORATION', 'DB_REQ_HAS_' || SUBSTR(ImprovementType, 13) FROM Improvement_ValidResources WHERE ImprovementType NOT IN (SELECT ImprovementType FROM Improvements WHERE DefenseModifier > 0 OR AirSlots > 0 OR WeaponSlots > 0) ;
+INSERT OR IGNORE INTO Requirements (RequirementId, RequirementType) VALUES ('DB_REQ_HAS_STANDARD_RESOURCE_IMPROVEMENT_OR_INDUSTRY_OR_CORPORATION', 'REQUIREMENT_REQUIREMENTSET_IS_MET') ;
+INSERT OR IGNORE INTO RequirementArguments (RequirementId, Name, Value) VALUES ('DB_REQ_HAS_STANDARD_RESOURCE_IMPROVEMENT_OR_INDUSTRY_OR_CORPORATION', 'RequirementSetId', 'DB_REQSET_HAS_STANDARD_RESOURCE_IMPROVEMENT_OR_INDUSTRY_OR_CORPORATION') ;
+
+
+-- Plot has improvement X and is next to district Y (DB_REQ_HAS_MINE_NEXT_TO_HOLY_SITE, DB_REQSET_HAS_MINE_NEXT_TO_HOLY_SITE)
 INSERT OR IGNORE INTO RequirementSets (RequirementSetId, RequirementSetType) 
   SELECT 'DB_REQSET_HAS_' || SUBSTR(a.ImprovementType, 13) || '_NEXT_TO_' || SUBSTR(b.DistrictType, 10), 'REQUIREMENTSET_TEST_ALL' FROM Improvements AS a LEFT JOIN Districts AS b WHERE b.TraitType IS NULL ;
 INSERT OR IGNORE INTO RequirementSetRequirements (RequirementSetId, RequirementId) 
@@ -511,37 +641,6 @@ INSERT OR IGNORE INTO Requirements (RequirementId, RequirementType)
   SELECT 'DB_REQ_HAS_' || SUBSTR(a.ImprovementType, 13) || '_NEXT_TO_' || SUBSTR(b.DistrictType, 10), 'REQUIREMENT_REQUIREMENTSET_IS_MET' FROM Improvements AS a LEFT JOIN Districts AS b WHERE b.TraitType IS NULL ;
 INSERT OR IGNORE INTO RequirementArguments (RequirementId, Name, Value) 
   SELECT 'DB_REQ_HAS_' || SUBSTR(a.ImprovementType, 13) || '_NEXT_TO_' || SUBSTR(b.DistrictType, 10), 'RequirementSetId', 'DB_REQSET_HAS_' || SUBSTR(a.ImprovementType, 13) || '_NEXT_TO_' || SUBSTR(b.DistrictType, 10) FROM Improvements AS a LEFT JOIN Districts AS b WHERE b.TraitType IS NULL ;
-
--- Plantation Tags
-INSERT OR IGNORE INTO Requirements (RequirementId, RequirementType) VALUES 
-                         ('DB_REQ_HAS_PLANTATION_TAG', 'REQUIREMENT_REQUIREMENTSET_IS_MET'),
-						 ('DB_REQ_HAS_PLANTATION_TAG2', 'REQUIREMENT_REQUIREMENTSET_IS_MET') ;
-INSERT OR IGNORE INTO RequirementArguments (RequirementId, Name, Value) VALUES 
-                                 ('DB_REQ_HAS_PLANTATION_TAG', 'RequirementSetId', 'PLOT_HAS_PLANTATION_TAG_REQUIREMENTS'),
-								 ('DB_REQ_HAS_PLANTATION_TAG2', 'RequirementSetId', 'PLOT_HAS_PLANTATION_TAG2_REQUIREMENTS') ;
--- Plantation Tag next to district (DB_REQ_PLANTATION_TAG_NEXT_TO_HOLY_SITE, DB_REQSET_PLANTATION_TAG_NEXT_TO_HOLY_SITE)
-INSERT OR IGNORE INTO RequirementSets (RequirementSetId, RequirementSetType)
-  SELECT 'DB_REQSET_PLANTATION_TAG_NEXT_TO_' || SUBSTR(DistrictType, 10), 'REQUIREMENTSET_TEST_ALL' FROM Districts WHERE TraitType IS NULL ;
-INSERT OR IGNORE INTO RequirementSetRequirements (RequirementSetId, RequirementId)
-  SELECT 'DB_REQSET_PLANTATION_TAG_NEXT_TO_' || SUBSTR(DistrictType, 10), 'DB_REQ_HAS_PLANTATION_TAG' FROM Districts WHERE TraitType IS NULL ;
-INSERT OR IGNORE INTO RequirementSetRequirements (RequirementSetId, RequirementId)
-  SELECT 'DB_REQSET_PLANTATION_TAG_NEXT_TO_' || SUBSTR(DistrictType, 10), 'DB_REQ_NEXT_TO_' || SUBSTR(DistrictType, 10) FROM Districts WHERE TraitType IS NULL ;
-INSERT OR IGNORE INTO Requirements (RequirementId, RequirementType) 
-  SELECT 'DB_REQ_PLANTATION_TAG_NEXT_TO_' || SUBSTR(DistrictType, 10), 'REQUIREMENT_REQUIREMENTSET_IS_MET' FROM Districts WHERE TraitType IS NULL ;
-INSERT OR IGNORE INTO RequirementArguments (RequirementId, Name, Value) 
-  SELECT 'DB_REQ_PLANTATION_TAG_NEXT_TO_' || SUBSTR(DistrictType, 10), 'RequirementSetId', 'DB_REQSET_PLANTATION_TAG_NEXT_TO_' || SUBSTR(DistrictType, 10) FROM Districts WHERE TraitType IS NULL ;
-
--- Plantation Tag 2 next to district (DB_REQ_PLANTATION_TAG2_NEXT_TO_HOLY_SITE, DB_REQSET_PLANTATION_TAG2_NEXT_TO_HOLY_SITE)
-INSERT OR IGNORE INTO RequirementSets (RequirementSetId, RequirementSetType)
-  SELECT 'DB_REQSET_PLANTATION_TAG2_NEXT_TO_' || SUBSTR(DistrictType, 10), 'REQUIREMENTSET_TEST_ALL' FROM Districts WHERE TraitType IS NULL ;
-INSERT OR IGNORE INTO RequirementSetRequirements (RequirementSetId, RequirementId)
-  SELECT 'DB_REQSET_PLANTATION_TAG2_NEXT_TO_' || SUBSTR(DistrictType, 10), 'DB_REQ_HAS_PLANTATION_TAG2' FROM Districts WHERE TraitType IS NULL ;
-INSERT OR IGNORE INTO RequirementSetRequirements (RequirementSetId, RequirementId)
-  SELECT 'DB_REQSET_PLANTATION_TAG2_NEXT_TO_' || SUBSTR(DistrictType, 10), 'DB_REQ_NEXT_TO_' || SUBSTR(DistrictType, 10) FROM Districts WHERE TraitType IS NULL ;
-INSERT OR IGNORE INTO Requirements (RequirementId, RequirementType) 
-  SELECT 'DB_REQ_PLANTATION_TAG2_NEXT_TO_' || SUBSTR(DistrictType, 10), 'REQUIREMENT_REQUIREMENTSET_IS_MET' FROM Districts WHERE TraitType IS NULL ;
-INSERT OR IGNORE INTO RequirementArguments (RequirementId, Name, Value) 
-  SELECT 'DB_REQ_PLANTATION_TAG2_NEXT_TO_' || SUBSTR(DistrictType, 10), 'RequirementSetId', 'DB_REQSET_PLANTATION_TAG2_NEXT_TO_' || SUBSTR(DistrictType, 10) FROM Districts WHERE TraitType IS NULL ;
 
 -- Specific Mines (DB_REQ_HAS_STRATEGIC_MINE, DB_REQSET_HAS_STRATEGIC_MINE)
 INSERT OR IGNORE INTO Requirements (RequirementId, RequirementType) VALUES
@@ -610,6 +709,28 @@ INSERT OR IGNORE INTO RequirementSetRequirements (RequirementSetId, RequirementI
 												  ('DB_REQSET_UNIT_NEAR_ENEMY_RELIGIOUS_CITY', 'REQUIRES_UNIT_NEAR_ENEMY_RELIGIOUS_CITY') ;
 
 
+-- Plot within X tiles of where the modifier is attached (DB_REQ_WITHIN_9_TILES, DB_REQSET_WITHIN_9_TILES)
+INSERT OR IGNORE INTO Requirements (RequirementId, RequirementType)
+  WITH counter as (SELECT 0 x UNION SELECT x + 1 FROM counter WHERE x < 20) 
+  SELECT 'DB_REQ_WITHIN_' || x || '_TILES', 'REQUIREMENT_PLOT_ADJACENT_TO_OWNER' FROM counter ;
+
+INSERT OR IGNORE INTO RequirementArguments (RequirementId, Name, Value)
+  WITH counter as (SELECT 0 x UNION SELECT x + 1 FROM counter WHERE x < 20) 
+  SELECT 'DB_REQ_WITHIN_' || x || '_TILES', 'MinDistance', 0 FROM counter ;
+
+INSERT OR IGNORE INTO RequirementArguments (RequirementId, Name, Value)
+  WITH counter as (SELECT 0 x UNION SELECT x + 1 FROM counter WHERE x < 20) 
+  SELECT 'DB_REQ_WITHIN_' || x || '_TILES', 'MaxDistance', x FROM counter ;
+
+INSERT OR IGNORE INTO RequirementSets (RequirementSetId, RequirementSetType)
+  WITH counter as (SELECT 0 x UNION SELECT x + 1 FROM counter WHERE x < 20) 
+  SELECT 'DB_REQSET_WITHIN_' || x || '_TILES', 'REQUIREMENTSET_TEST_ALL' FROM counter ;
+
+INSERT OR IGNORE INTO RequirementSetRequirements (RequirementSetId, RequirementId)
+  WITH counter as (SELECT 0 x UNION SELECT x + 1 FROM counter WHERE x < 20) 
+  SELECT 'DB_REQSET_WITHIN_' || x || '_TILES', 'DB_REQ_WITHIN_' || x || '_TILES' FROM counter ;
+
+
 -- Reqset for being within 2 tiles of owner (e.g. great generals)
 INSERT OR IGNORE INTO RequirementSets (RequirementSetId, RequirementSetType) VALUES ('DB_REQSET_AOE_OWNER_ADJACENCY', 'REQUIREMENTSET_TEST_ALL') ;
 INSERT OR IGNORE INTO RequirementSetRequirements (RequirementSetId, RequirementId) VALUES ('DB_REQSET_AOE_OWNER_ADJACENCY', 'AOE_REQUIRES_OWNER_ADJACENCY') ;
@@ -637,7 +758,6 @@ INSERT OR IGNORE INTO RequirementSets (RequirementSetId, RequirementSetType) VAL
 INSERT OR IGNORE INTO RequirementSetRequirements (RequirementSetId, RequirementId) VALUES ('DB_REQSET_NEXTTO_GURU', 'DB_REQ_NEXTTO_GURU') ;
 
 -- Unit next to Great Prophet
-
 INSERT OR IGNORE INTO Requirements (RequirementId, RequirementType) VALUES ('DB_REQ_NEXTTO_GREAT_PROPHET', 'REQUIREMENT_PLOT_NEARBY_UNIT_TAG_MATCHES') ;
 INSERT OR IGNORE INTO RequirementArguments 
 (RequirementId,					Name,			Value) 
@@ -690,6 +810,27 @@ INSERT OR IGNORE INTO RequirementSetRequirements (RequirementSetId, RequirementI
   WITH counter as (SELECT 1 x UNION SELECT x + 1 FROM counter WHERE x < 6) 
   SELECT 'DB_REQSET_CITY_HAS_PANTHEON_AND_' || x || '_GOV_TITLE_ESTABLISHED', 'REQUIRES_CITY_FOLLOWS_PANTHEON' FROM counter ;
 
+-- Embarked and not-Embarked
+INSERT OR IGNORE INTO Requirements
+(RequirementId,			RequirementType,					Inverse) 
+VALUES
+('DB_REQ_EMBARKED',	'REQUIREMENT_UNIT_EMBARKED',	0),
+('DB_REQ_NOT_EMBARKED',	'REQUIREMENT_UNIT_EMBARKED',	1)
+;
+
+INSERT OR IGNORE INTO RequirementSets
+(RequirementSetId,		RequirementSetType)
+VALUES
+('DB_REQSET_EMBARKED',	'REQUIREMENTSET_TEST_ALL'),
+('DB_REQSET_NOT_EMBARKED',	'REQUIREMENTSET_TEST_ALL')
+;
+
+INSERT OR IGNORE INTO RequirementSetRequirements
+(RequirementSetId,		RequirementId)
+VALUES
+('DB_REQSET_EMBARKED',	'DB_REQ_EMBARKED'),
+('DB_REQSET_NOT_EMBARKED',	'DB_REQ_NOT_EMBARKED')
+;
 
 -- Attacking and Defending
 INSERT OR IGNORE INTO Requirements
@@ -1342,13 +1483,23 @@ INSERT OR IGNORE INTO DynamicModifiers (ModifierType, CollectionType, EffectType
 
 -- Can purchase buildings for district with faith
 --    CITIES (DistrictType)
-INSERT OR IGNORE INTO Types (Type, Kind) VALUES ('DB_DM_CITIES_CAN_PURCHASE_BUILDING_W_FAITH', 'KIND_MODIFIER') ;
-INSERT OR IGNORE INTO DynamicModifiers (ModifierType, CollectionType, EffectType) VALUES ('DB_DM_CITIES_CAN_PURCHASE_BUILDING_W_FAITH', 'COLLECTION_ALL_CITIES', 'EFFECT_ENABLE_BUILDING_FAITH_PURCHASE') ;
+INSERT OR IGNORE INTO Types (Type, Kind) VALUES ('DB_DM_CITIES_CAN_PURCHASE_DISTRICT_BUILDINGS_W_FAITH', 'KIND_MODIFIER') ;
+INSERT OR IGNORE INTO DynamicModifiers (ModifierType, CollectionType, EffectType) VALUES ('DB_DM_CITIES_CAN_PURCHASE_DISTRICT_BUILDINGS_W_FAITH', 'COLLECTION_ALL_CITIES', 'EFFECT_ENABLE_BUILDING_FAITH_PURCHASE') ;
 
--- Changing purchase costs (when a city follows the religion)
+-- Can purchase specific buildings with faith
+--    CITIES (BuildingType)
+INSERT OR IGNORE INTO Types (Type, Kind) VALUES ('DB_DM_CITIES_CAN_PURCHASE_BUILDING_W_FAITH', 'KIND_MODIFIER') ;
+INSERT OR IGNORE INTO DynamicModifiers (ModifierType, CollectionType, EffectType) VALUES ('DB_DM_CITIES_CAN_PURCHASE_BUILDING_W_FAITH', 'COLLECTION_ALL_CITIES', 'EFFECT_ENABLE_SPECIFIC_BUILDING_FAITH_PURCHASE') ;
+
+-- Changing unit purchase costs (when a city follows the religion)
 --   CITIES (Amount, UnitType)
 INSERT OR IGNORE INTO Types (Type, Kind) VALUES ('DB_DM_CITIES_ADJUST_UNIT_COST', 'KIND_MODIFIER') ;
 INSERT OR IGNORE INTO DynamicModifiers (ModifierType, CollectionType, EffectType) VALUES ('DB_DM_CITIES_ADJUST_UNIT_COST', 'COLLECTION_ALL_CITIES', 'EFFECT_ADJUST_UNIT_PURCHASE_COST') ;
+
+-- Changing building purchase costs (when a city follows the religion)
+--   CITIES (Amount, BuildingType)
+INSERT OR IGNORE INTO Types (Type, Kind) VALUES ('DB_DM_CITIES_ADJUST_BUILDING_COST', 'KIND_MODIFIER') ;
+INSERT OR IGNORE INTO DynamicModifiers (ModifierType, CollectionType, EffectType) VALUES ('DB_DM_CITIES_ADJUST_BUILDING_COST', 'COLLECTION_ALL_CITIES', 'EFFECT_ADJUST_BUILDING_PURCHASE_COST') ;
 
 -- Great Work Yield
 --    CITIES (GreatWorkObjectType, ScalingFactor, YieldChange, YieldType)
@@ -1405,63 +1556,86 @@ INSERT OR IGNORE INTO DynamicModifiers (ModifierType, CollectionType, EffectType
 INSERT OR IGNORE INTO Types (Type, Kind) VALUES ('DB_DM_CITIES_ADJUST_WALL_STRENGTH', 'KIND_MODIFIER') ;
 INSERT OR IGNORE INTO DynamicModifiers (ModifierType, CollectionType, EffectType) VALUES ('DB_DM_CITIES_ADJUST_WALL_STRENGTH', 'COLLECTION_ALL_CITIES', 'EFFECT_ADJUST_CITY_OUTER_DEFENSE') ;
 
--- Unit damage decrement
-INSERT OR IGNORE INTO Types
-(Type,											Kind)
-VALUES
-('DB_DM_REDUCE_DAMAGE_DECREMENT_BY_PERCENT',	'KIND_MODIFIER') ;
+-- Prevent Battering Rams
+--   CITIES (no arguments)
+INSERT OR IGNORE INTO Types (Type, Kind) VALUES ('DB_DM_CITIES_PREVENT_RAM', 'KIND_MODIFIER') ;
+INSERT OR IGNORE INTO DynamicModifiers (ModifierType, CollectionType, EffectType) VALUES ('DB_DM_CITIES_PREVENT_RAM', 'COLLECTION_ALL_CITIES', 'EFFECT_ADJUST_CITY_PREVENT_MELEE_ATTACK_OUTER_DEFENSES') ;
 
-INSERT OR IGNORE INTO DynamicModifiers 
-(ModifierType,									CollectionType,		EffectType)
-VALUES
-('DB_DM_REDUCE_DAMAGE_DECREMENT_BY_PERCENT',	'COLLECTION_OWNER',	'EFFECT_ADJUST_UNIT_STRENGTH_REDUCTION_FOR_DAMAGE_MODIFIER') ;
+-- Prevent Siege Towers
+--   CITIES (no arguments)
+INSERT OR IGNORE INTO Types (Type, Kind) VALUES ('DB_DM_CITIES_PREVENT_TOWER', 'KIND_MODIFIER') ;
+INSERT OR IGNORE INTO DynamicModifiers (ModifierType, CollectionType, EffectType) VALUES ('DB_DM_CITIES_PREVENT_TOWER', 'COLLECTION_ALL_CITIES', 'EFFECT_ADJUST_CITY_PREVENT_BYPASS_OUTER_DEFENSES') ;
+
+-- City ranged attack strength
+--   CITIES (Amount)
+INSERT OR IGNORE INTO Types (Type, Kind) VALUES ('DB_DM_CITIES_ADJUST_ATTACK_STRENGTH', 'KIND_MODIFIER') ;
+INSERT OR IGNORE INTO DynamicModifiers (ModifierType, CollectionType, EffectType) VALUES ('DB_DM_CITIES_ADJUST_ATTACK_STRENGTH', 'COLLECTION_ALL_CITIES', 'EFFECT_ADJUST_CITY_RANGED_STRIKE') ;
+
+-- City ranged attacks per turn
+--   CITIES (Amount)
+INSERT OR IGNORE INTO Types (Type, Kind) VALUES ('DB_DM_CITIES_ADJUST_ATTACKS_PER_TURN', 'KIND_MODIFIER') ;
+INSERT OR IGNORE INTO DynamicModifiers (ModifierType, CollectionType, EffectType) VALUES ('DB_DM_CITIES_ADJUST_ATTACKS_PER_TURN', 'COLLECTION_ALL_CITIES', 'EFFECT_ADJUST_CITY_ATTACKS_PER_TURN') ;
+
+-- City ranged attacks range
+--   DISTRICTS (Amount) 
+--   Set SubjectRequirementSetId = DB_REQSET_IS_CITY_CENTER, otherwise it will apply multiple times and give you more range than you want
+--   It does apply to the city's encampment when limited with DB_REQSET_IS_CITY_CENTER
+INSERT OR IGNORE INTO Types (Type, Kind) VALUES ('DB_DM_DISTRICTS_ADJUST_ATTACK_RANGE', 'KIND_MODIFIER') ;
+INSERT OR IGNORE INTO DynamicModifiers (ModifierType, CollectionType, EffectType) VALUES ('DB_DM_DISTRICTS_ADJUST_ATTACK_RANGE', 'COLLECTION_CITY_DISTRICTS', 'EFFECT_ADJUST_DISTRICT_ATTACK_RANGE') ;
+
+-- Adjust loyalty to all other cities
+--	 CITIES (Amount)
+--   Can attach with BuildingModifiers or DistrictModifiers and use DB_REQSET_WITHIN_9_TILES to filter cities within a range of, say, 9 tiles
+--   When I wanted a building to affect my cities positively, and foriegn cities negatively, my method was to apply a -1 negative loyalty to all cities in the range, and then apply +2 with the player_cities version (below)
+INSERT OR IGNORE INTO Types (Type, Kind) VALUES ('DB_DM_ALL_CITIES_ADJUST_IDENTITY_PER_TURN', 'KIND_MODIFIER') ;
+INSERT OR IGNORE INTO DynamicModifiers (ModifierType, CollectionType, EffectType) VALUES ('DB_DM_ALL_CITIES_ADJUST_IDENTITY_PER_TURN', 'COLLECTION_ALL_CITIES', 'EFFECT_ADJUST_CITY_IDENTITY_PER_TURN') ;
+
+-- Adjust loyalty to all domestic cities 
+--	 CITIES (Amount)
+--   Attach with BuildingModifiers or DistrictModifiers and use requirements of type REQUIREMENT_PLOT_ADJACENT_BUILDING_TYPE_MATCHES or REQUIREMENT_PLOT_ADJACENT_DISTRICT_TYPE_MATCHES to filter cities with a range of the Building/District
+INSERT OR IGNORE INTO Types (Type, Kind) VALUES ('DB_DM_PLAYER_CITIES_ADJUST_IDENTITY_PER_TURN', 'KIND_MODIFIER') ;
+INSERT OR IGNORE INTO DynamicModifiers (ModifierType, CollectionType, EffectType) VALUES ('DB_DM_PLAYER_CITIES_ADJUST_IDENTITY_PER_TURN', 'COLLECTION_PLAYER_CITIES', 'EFFECT_ADJUST_CITY_IDENTITY_PER_TURN') ;
+
+-- Unit damage decrement
+--	 UNITS (Amount)
+INSERT OR IGNORE INTO Types (Type, Kind) VALUES ('DB_DM_REDUCE_DAMAGE_DECREMENT_BY_PERCENT', 'KIND_MODIFIER') ;
+INSERT OR IGNORE INTO DynamicModifiers (ModifierType, CollectionType, EffectType) VALUES ('DB_DM_REDUCE_DAMAGE_DECREMENT_BY_PERCENT', 'COLLECTION_OWNER', 'EFFECT_ADJUST_UNIT_STRENGTH_REDUCTION_FOR_DAMAGE_MODIFIER') ;
 
 -- All units damage decrement
-INSERT OR IGNORE INTO Types
-(Type,													Kind)
-VALUES
-('DB_DM_REDUCE_DAMAGE_DECREMENT_BY_PERCENT_ALL_UNITS',	'KIND_MODIFIER') ;
-
-INSERT OR IGNORE INTO DynamicModifiers 
-(ModifierType,											CollectionType,			EffectType)
-VALUES
-('DB_DM_REDUCE_DAMAGE_DECREMENT_BY_PERCENT_ALL_UNITS',	'COLLECTION_ALL_UNITS',	'EFFECT_ADJUST_UNIT_STRENGTH_REDUCTION_FOR_DAMAGE_MODIFIER') ;
-
+--	 UNITS (Amount)
+INSERT OR IGNORE INTO Types (Type, Kind) VALUES ('DB_DM_REDUCE_DAMAGE_DECREMENT_BY_PERCENT_ALL_UNITS',	'KIND_MODIFIER') ;
+INSERT OR IGNORE INTO DynamicModifiers (ModifierType, CollectionType, EffectType) VALUES ('DB_DM_REDUCE_DAMAGE_DECREMENT_BY_PERCENT_ALL_UNITS',	'COLLECTION_ALL_UNITS',	'EFFECT_ADJUST_UNIT_STRENGTH_REDUCTION_FOR_DAMAGE_MODIFIER') ;
 
 -- Grant single unit ability
-INSERT OR IGNORE INTO Types
-(Type,									Kind)
-VALUES
-('DB_DM_GRANT_ABILITY',					'KIND_MODIFIER') ;
-
-INSERT OR IGNORE INTO DynamicModifiers 
-(ModifierType,							CollectionType,				EffectType)
-VALUES
-('DB_DM_GRANT_ABILITY',					'COLLECTION_OWNER',			'EFFECT_GRANT_ABILITY') ;
+--	 UNITS (AbilityType, ModifierId)
+INSERT OR IGNORE INTO Types (Type, Kind) VALUES ('DB_DM_GRANT_ABILITY', 'KIND_MODIFIER') ;
+INSERT OR IGNORE INTO DynamicModifiers (ModifierType, CollectionType, EffectType) VALUES ('DB_DM_GRANT_ABILITY', 'COLLECTION_OWNER', 'EFFECT_GRANT_ABILITY') ;
 
 -- Grant all units ability
-INSERT OR IGNORE INTO Types
-(Type,									Kind)
-VALUES
-('DB_DM_GRANT_ABILITY_ALL_UNITS',		'KIND_MODIFIER') ;
-
-INSERT OR IGNORE INTO DynamicModifiers 
-(ModifierType,							CollectionType,				EffectType)
-VALUES
-('DB_DM_GRANT_ABILITY_ALL_UNITS',		'COLLECTION_ALL_UNITS',		'EFFECT_GRANT_ABILITY') ;
+--	 UNITS (AbilityType, ModifierId)
+INSERT OR IGNORE INTO Types (Type, Kind) VALUES ('DB_DM_GRANT_ABILITY_ALL_UNITS', 'KIND_MODIFIER') ;
+INSERT OR IGNORE INTO DynamicModifiers (ModifierType, CollectionType, EffectType) VALUES ('DB_DM_GRANT_ABILITY_ALL_UNITS', 'COLLECTION_ALL_UNITS', 'EFFECT_GRANT_ABILITY') ;
 
 -- Grant player units ability
-INSERT OR IGNORE INTO Types
-(Type,									Kind)
-VALUES
-('DB_DM_GRANT_ABILITY_PLAYER_UNITS',	'KIND_MODIFIER') ;
+--	 UNITS (AbilityType, ModifierId)
+INSERT OR IGNORE INTO Types (Type, Kind) VALUES ('DB_DM_GRANT_ABILITY_PLAYER_UNITS', 'KIND_MODIFIER') ;
+INSERT OR IGNORE INTO DynamicModifiers (ModifierType, CollectionType, EffectType) VALUES ('DB_DM_GRANT_ABILITY_PLAYER_UNITS', 'COLLECTION_PLAYER_UNITS', 'EFFECT_GRANT_ABILITY') ;
 
-INSERT OR IGNORE INTO DynamicModifiers 
-(ModifierType,							CollectionType,				EffectType)
-VALUES
-('DB_DM_GRANT_ABILITY_PLAYER_UNITS',	'COLLECTION_PLAYER_UNITS',	'EFFECT_GRANT_ABILITY') ;
+-- Unit converts city to my religion on capture
+--	 UNITS (Enable [bool])
+--   Note: I need to have my religion in > half my cities before this takes effect
+INSERT OR IGNORE INTO Types (Type, Kind) VALUES ('DB_DM_CITY_TO_MY_RELIGION_ON_CAPTURE', 'KIND_MODIFIER') ;
+INSERT OR IGNORE INTO DynamicModifiers (ModifierType, CollectionType, EffectType) VALUES ('DB_DM_CITY_TO_MY_RELIGION_ON_CAPTURE', 'COLLECTION_OWNER', 'EFFECT_ADJUST_CITY_RELIGION_ON_CAPTURE') ;
 
+-- Killing units creates religious pressure
+--	 UNITS (LandVictorySpread [bool])
+INSERT OR IGNORE INTO Types (Type, Kind) VALUES ('DB_DM_VICTORY_SPREADS_RELIGION', 'KIND_MODIFIER') ;
+INSERT OR IGNORE INTO DynamicModifiers (ModifierType, CollectionType, EffectType) VALUES ('DB_DM_VICTORY_SPREADS_RELIGION', 'COLLECTION_OWNER', 'EFFECT_ADJUST_UNIT_LAND_VICTORY_SPREAD') ;
 
+-- Combat Experience modifier
+--	 UNITS (Amount [percentage; eg 25 = 25%])
+INSERT OR IGNORE INTO Types (Type, Kind) VALUES ('DB_DM_ADJUST_COMBAT_EXPERIENCE', 'KIND_MODIFIER') ;
+INSERT OR IGNORE INTO DynamicModifiers (ModifierType, CollectionType, EffectType) VALUES ('DB_DM_ADJUST_COMBAT_EXPERIENCE', 'COLLECTION_OWNER', 'EFFECT_ADJUST_UNIT_EXPERIENCE_MODIFIER') ;
 
 
 
@@ -1494,61 +1668,53 @@ INSERT OR IGNORE INTO Types (Type, Kind) VALUES ('DB_DM_ADJUST_DISTRICT_HOUSING'
 INSERT OR IGNORE INTO DynamicModifiers (ModifierType, CollectionType, EffectType) VALUES ('DB_DM_ADJUST_DISTRICT_HOUSING', 'COLLECTION_CITY_DISTRICTS', 'EFFECT_ADJUST_DISTRICT_HOUSING') ;
 
 
--- PLOTS
-
--- Amenity on plot (e.g. Dionysus)
---    CITIES (Amount)  20
-INSERT OR IGNORE INTO Types (Type, Kind) VALUES ('DB_DM_PLOT_ADJUST_IMPROVEMENT_AMENITY', 'KIND_MODIFIER') ;
-INSERT OR IGNORE INTO DynamicModifiers (ModifierType, CollectionType, EffectType) VALUES ('DB_DM_PLOT_ADJUST_IMPROVEMENT_AMENITY', 'COLLECTION_CITY_PLOT_YIELDS', 'EFFECT_ADJUST_IMPROVEMENT_AMENITY') ;
-
--- Amenity on plot2
---    CITIES (Amount)  20
-INSERT OR IGNORE INTO Types (Type, Kind) VALUES ('DB_DM_PLOT_ADJUST_RELIGION_AMENITY', 'KIND_MODIFIER') ;
-INSERT OR IGNORE INTO DynamicModifiers (ModifierType, CollectionType, EffectType) VALUES ('DB_DM_PLOT_ADJUST_RELIGION_AMENITY', 'COLLECTION_CITY_PLOT_YIELDS', 'EFFECT_ADJUST_CITY_AMENITIES_FROM_RELIGION') ;
-
---    CITIES (Amount) 27
-INSERT OR IGNORE INTO Types (Type, Kind) VALUES ('DB_DM_PLOT_ADJUST_CITY_STATE_AMENITY', 'KIND_MODIFIER') ;
-INSERT OR IGNORE INTO DynamicModifiers (ModifierType, CollectionType, EffectType) VALUES ('DB_DM_PLOT_ADJUST_CITY_STATE_AMENITY', 'COLLECTION_CITY_PLOT_YIELDS', 'EFFECT_ADJUST_CITY_AMENITIES_FROM_CITY_STATES') ;
-
---    CITIES (Amount) 26
-INSERT OR IGNORE INTO Types (Type, Kind) VALUES ('DB_DM_PLOT_ADJUST_GOVERNOR_AMENITY', 'KIND_MODIFIER') ;
-INSERT OR IGNORE INTO DynamicModifiers (ModifierType, CollectionType, EffectType) VALUES ('DB_DM_PLOT_ADJUST_GOVERNOR_AMENITY', 'COLLECTION_CITY_PLOT_YIELDS', 'EFFECT_ADJUST_CITY_AMENITIES_FROM_GOVERNORS') ;
-
---    CITIES (Amount) 26
-INSERT OR IGNORE INTO Types (Type, Kind) VALUES ('DB_DM_PLOT_ADJUST_GREAT_PEOPLE_AMENITY', 'KIND_MODIFIER') ;
-INSERT OR IGNORE INTO DynamicModifiers (ModifierType, CollectionType, EffectType) VALUES ('DB_DM_PLOT_ADJUST_GREAT_PEOPLE_AMENITY', 'COLLECTION_CITY_PLOT_YIELDS', 'EFFECT_ADJUST_CITY_AMENITIES_FROM_GREAT_PEOPLE') ;
-
---    CITIES (Amount) 27
-INSERT OR IGNORE INTO Types (Type, Kind) VALUES ('DB_DM_PLOT_ADJUST_LUX_DIVERSITY_AMENITY', 'KIND_MODIFIER') ;
-INSERT OR IGNORE INTO DynamicModifiers (ModifierType, CollectionType, EffectType) VALUES ('DB_DM_PLOT_ADJUST_LUX_DIVERSITY_AMENITY', 'COLLECTION_CITY_PLOT_YIELDS', 'EFFECT_ADJUST_CITY_EXTRA_AMENITY_FOR_LUXURY_DIVERSITY') ;
-
---    CITIES (Amount) 14
-INSERT OR IGNORE INTO Types (Type, Kind) VALUES ('DB_DM_PLOT_ADJUST_NATURAL_WONDER_AMENITY', 'KIND_MODIFIER') ;
-INSERT OR IGNORE INTO DynamicModifiers (ModifierType, CollectionType, EffectType) VALUES ('DB_DM_PLOT_ADJUST_NATURAL_WONDER_AMENITY', 'COLLECTION_CITY_PLOT_YIELDS', 'EFFECT_ADJUST_NATURAL_WONDER_AMENITY') ;
-
---    CITIES (Amount) 20
-INSERT OR IGNORE INTO Types (Type, Kind) VALUES ('DB_DM_PLOT_ADJUST_POLICY_AMENITY', 'KIND_MODIFIER') ;
-INSERT OR IGNORE INTO DynamicModifiers (ModifierType, CollectionType, EffectType) VALUES ('DB_DM_PLOT_ADJUST_POLICY_AMENITY', 'COLLECTION_CITY_PLOT_YIELDS', 'EFFECT_ADJUST_POLICY_AMENITY') ;
-
-
 -----------------------------------------------
 -- Units
 -----------------------------------------------
+
+-- Grant ability to units trained in this city (that follows this religion)
+--    UNITS (PromotionType)
+INSERT OR IGNORE INTO Types (Type, Kind) VALUES ('DB_DM_GRANT_ABILITY_TO_TRAINED_UNITS', 'KIND_MODIFIER') ;
+INSERT OR IGNORE INTO DynamicModifiers (ModifierType, CollectionType, EffectType) VALUES ('DB_DM_GRANT_PROMOTION_TO_TRAINED_UNITS', 'COLLECTION_CITY_TRAINED_UNITS', 'EFFECT_GRANT_ABILITY') ;
 
 -- Grant promotion to units trained in this city (that follows this religion)
 --    UNITS (PromotionType)
 INSERT OR IGNORE INTO Types (Type, Kind) VALUES ('DB_DM_GRANT_PROMOTION_TO_TRAINED_UNITS', 'KIND_MODIFIER') ;
 INSERT OR IGNORE INTO DynamicModifiers (ModifierType, CollectionType, EffectType) VALUES ('DB_DM_GRANT_PROMOTION_TO_TRAINED_UNITS', 'COLLECTION_CITY_TRAINED_UNITS', 'EFFECT_GRANT_PROMOTION') ;
 
--- Grant promotion to units trained in this city (that follows this religion)
+-- Adjust damage to unit
 --    UNITS (Amount)
 INSERT OR IGNORE INTO Types (Type, Kind) VALUES ('DB_DM_DAMAGE_TO_UNIT', 'KIND_MODIFIER') ;
 INSERT OR IGNORE INTO DynamicModifiers (ModifierType, CollectionType, EffectType) VALUES ('DB_DM_DAMAGE_TO_UNIT', 'COLLECTION_OWNER', 'EFFECT_ADJUST_UNIT_DAMAGE') ;
 
+-- Can bypass walls (this actually gives the unit a siege-tower-ish ability... when it's adjacent to a city ALL your melee units (inc cavalry) bypass walls, not just the unit with the ability)
+--    UNITS (Enable (bool))
+INSERT OR IGNORE INTO Types (Type, Kind) VALUES ('DB_DM_CAN_BYPASS_WALLS', 'KIND_MODIFIER') ;
+INSERT OR IGNORE INTO DynamicModifiers (ModifierType, CollectionType, EffectType) VALUES ('DB_DM_CAN_BYPASS_WALLS', 'COLLECTION_OWNER', 'EFFECT_ADJUST_UNIT_BYPASS_WALLS') ;
+
+-- Can wall attack (this actually gives the unit a battering-ram-ish ability... when it's adjacent to a city ALL your melee units (inc cavalry) attack the wall, not just the unit with the ability)
+--    UNITS (Enable (bool))
+INSERT OR IGNORE INTO Types (Type, Kind) VALUES ('DB_DM_CAN_WALL_ATTACK', 'KIND_MODIFIER') ;
+INSERT OR IGNORE INTO DynamicModifiers (ModifierType, CollectionType, EffectType) VALUES ('DB_DM_CAN_WALL_ATTACK', 'COLLECTION_OWNER', 'EFFECT_ADJUST_UNIT_ENABLE_WALL_ATTACK') ;
+
+-- Can bypass walls (this actually gives the unit a siege-tower-ish ability... when it's adjacent to a city ALL units of the chosen promotion class bypass walls, not just the unit with the ability)
+--    UNITS (PromotionClass)
+INSERT OR IGNORE INTO Types (Type, Kind) VALUES ('DB_DM_CAN_BYPASS_WALLS_PROMOTION_CLASS', 'KIND_MODIFIER') ;
+INSERT OR IGNORE INTO DynamicModifiers (ModifierType, CollectionType, EffectType) VALUES ('DB_DM_CAN_BYPASS_WALLS_PROMOTION_CLASS', 'COLLECTION_OWNER', 'EFFECT_ADJUST_UNIT_BYPASS_WALLS_PROMOTION_CLASS') ;
+
+-- Can wall attack (this actually gives the unit a battering-ram-ish ability... when it's adjacent to a city ALL units of the chosen promotion class attack the wall, not just the unit with the ability)
+--    UNITS (PromotionClass)
+INSERT OR IGNORE INTO Types (Type, Kind) VALUES ('DB_DM_CAN_WALL_ATTACK_PROMOTION_CLASS', 'KIND_MODIFIER') ;
+INSERT OR IGNORE INTO DynamicModifiers (ModifierType, CollectionType, EffectType) VALUES ('DB_DM_CAN_WALL_ATTACK_PROMOTION_CLASS', 'COLLECTION_OWNER', 'EFFECT_ADJUST_UNIT_ENABLE_WALL_ATTACK_PROMOTION_CLASS') ;
 
 -----------------------------------------------
 -- Player
 -----------------------------------------------
+
+-- Grant unit in capital 
+--    CITIES (Amount, UnitType, AllowUniqueOverride [bool - whether or not to override with unique units])
+INSERT OR IGNORE INTO Types (Type, Kind) VALUES ('DB_DM_PLAYER_GRANT_UNIT_IN_CAPITAL', 'KIND_MODIFIER') ;
+INSERT OR IGNORE INTO DynamicModifiers (ModifierType, CollectionType, EffectType) VALUES ('DB_DM_PLAYER_GRANT_UNIT_IN_CAPITAL', 'COLLECTION_PLAYER_CAPITAL_CITY', 'EFFECT_GRANT_UNIT_IN_CITY') ;
 
 -- Grant great person in capital (e.g. Saladin's free prophet at the beginning of the Classical era)
 --    CITIES (Amount, GreatPersonClassType)
@@ -1559,6 +1725,11 @@ INSERT OR IGNORE INTO DynamicModifiers (ModifierType, CollectionType, EffectType
 --    CITIES (BuildingType)
 INSERT OR IGNORE INTO Types (Type, Kind) VALUES ('DB_DM_PLAYER_GRANT_BUILDING_IN_PLAYER_CITIES_IGNORE', 'KIND_MODIFIER') ;
 INSERT OR IGNORE INTO DynamicModifiers (ModifierType, CollectionType, EffectType) VALUES ('DB_DM_PLAYER_GRANT_BUILDING_IN_PLAYER_CITIES_IGNORE', 'COLLECTION_PLAYER_CITIES', 'EFFECT_GRANT_BUILDING_IN_CITY_IGNORE') ;
+
+-- Grant building in all cities (e.g. when it follows a pantheon)
+--    CITIES (BuildingType)
+INSERT OR IGNORE INTO Types (Type, Kind) VALUES ('DB_DM_GRANT_BUILDING_IN_CITIES_IGNORE', 'KIND_MODIFIER') ;
+INSERT OR IGNORE INTO DynamicModifiers (ModifierType, CollectionType, EffectType) VALUES ('DB_DM_GRANT_BUILDING_IN_CITIES_IGNORE', 'COLLECTION_ALL_CITIES', 'EFFECT_GRANT_BUILDING_IN_CITY_IGNORE') ;
 
 --   PLAYERS (Amount)
 INSERT OR IGNORE INTO Types (Type, Kind) VALUES ('DB_DM_ADJUST_OWNED_BONUS_AMENITY', 'KIND_MODIFIER') ;

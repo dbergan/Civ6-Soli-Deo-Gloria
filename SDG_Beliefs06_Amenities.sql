@@ -6,8 +6,12 @@
 -- ------------------------------------
 -- ------------------------------------
 INSERT INTO Types (Type, Kind) VALUES ('SDG_NEARER_MY_GOD', 'KIND_BELIEF') ; 
-INSERT INTO Beliefs (BeliefType, Name, Description, BeliefClassType) VALUES ('SDG_NEARER_MY_GOD', 'LOC_SDG_NEARER_MY_GOD', 'LOC_SDG_NEARER_MY_GOD_DESCRIPTION', 'SDG_BELIEF_CLASS_199') ;
-UPDATE Beliefs SET BeliefClassType = 'SDG_BELIEF_CLASS_' || (SELECT cast(COUNT(BeliefType) + 9 as text) FROM Beliefs WHERE BeliefClassType LIKE 'SDG_BELIEF_CLASS_%') WHERE BeliefClassType = 'SDG_BELIEF_CLASS_199' ;
+
+INSERT INTO BeliefClasses (BeliefClassType, Name, MaxInReligion, AdoptionOrder)
+	SELECT 'SDG_BELIEF_CLASS_AMENITIES_' || (SELECT cast(COUNT(BeliefType) + 100 as text) FROM Beliefs WHERE BeliefClassType LIKE 'SDG_BELIEF_CLASS_%'), 'LOC_SDG_BELIEF_CLASS_AMENITIES_NAME', 999, (SELECT COUNT(BeliefType) + 100 FROM Beliefs WHERE BeliefClassType LIKE 'SDG_BELIEF_CLASS_%') ;
+INSERT INTO Beliefs (BeliefType, Name, Description, BeliefClassType) 
+	SELECT 'SDG_NEARER_MY_GOD', 'LOC_SDG_NEARER_MY_GOD', 'LOC_SDG_NEARER_MY_GOD_DESCRIPTION', 'SDG_BELIEF_CLASS_AMENITIES_' || (SELECT cast(COUNT(BeliefType) + 100 as text) FROM Beliefs WHERE BeliefClassType LIKE 'SDG_BELIEF_CLASS_%') ;
+
 INSERT INTO BeliefModifiers (BeliefType, ModifierID) VALUES ('SDG_NEARER_MY_GOD', 'SDG_NEARER_MY_GOD_YIELD') ;
 INSERT INTO Modifiers (ModifierId, ModifierType, SubjectRequirementSetId) VALUES ('SDG_NEARER_MY_GOD_YIELD', 'DB_DM_CITIES_ADJUST_AMENITIES_FROM_RELIGION', 'CITY_FOLLOWS_RELIGION_REQUIREMENTS') ;
 INSERT INTO ModifierArguments (ModifierId, Name, Value) VALUES ('SDG_NEARER_MY_GOD_YIELD', 'Amount', 1) ;
@@ -18,8 +22,11 @@ INSERT INTO ModifierArguments (ModifierId, Name, Value) VALUES ('SDG_NEARER_MY_G
 -- ------------------------------------
 -- ------------------------------------
 INSERT INTO Types (Type, Kind) VALUES ('SDG_BE_STILL_MY_SOUL', 'KIND_BELIEF') ; 
-INSERT INTO Beliefs (BeliefType, Name, Description, BeliefClassType) VALUES ('SDG_BE_STILL_MY_SOUL', 'LOC_SDG_BE_STILL_MY_SOUL', 'LOC_SDG_BE_STILL_MY_SOUL_DESCRIPTION', 'SDG_BELIEF_CLASS_199') ;
-UPDATE Beliefs SET BeliefClassType = 'SDG_BELIEF_CLASS_' || (SELECT cast(COUNT(BeliefType) + 9 as text) FROM Beliefs WHERE BeliefClassType LIKE 'SDG_BELIEF_CLASS_%') WHERE BeliefClassType = 'SDG_BELIEF_CLASS_199' ;
+
+INSERT INTO BeliefClasses (BeliefClassType, Name, MaxInReligion, AdoptionOrder)
+	SELECT 'SDG_BELIEF_CLASS_AMENITIES_' || (SELECT cast(COUNT(BeliefType) + 100 as text) FROM Beliefs WHERE BeliefClassType LIKE 'SDG_BELIEF_CLASS_%'), 'LOC_SDG_BELIEF_CLASS_AMENITIES_NAME', 999, (SELECT COUNT(BeliefType) + 100 FROM Beliefs WHERE BeliefClassType LIKE 'SDG_BELIEF_CLASS_%') ;
+INSERT INTO Beliefs (BeliefType, Name, Description, BeliefClassType) 
+	SELECT 'SDG_BE_STILL_MY_SOUL', 'LOC_SDG_BE_STILL_MY_SOUL', 'LOC_SDG_BE_STILL_MY_SOUL_DESCRIPTION', 'SDG_BELIEF_CLASS_AMENITIES_' || (SELECT cast(COUNT(BeliefType) + 100 as text) FROM Beliefs WHERE BeliefClassType LIKE 'SDG_BELIEF_CLASS_%') ;
 
 INSERT INTO BeliefModifiers (BeliefType, ModifierID)
   WITH counter as (SELECT 7 x UNION SELECT x + 7 FROM counter WHERE x < 90) 
@@ -38,8 +45,11 @@ INSERT INTO ModifierArguments (ModifierId, Name, Value)
 -- ------------------------------------
 -- ------------------------------------
 INSERT INTO Types (Type, Kind) VALUES ('SDG_ODE_TO_JOY', 'KIND_BELIEF') ; 
-INSERT INTO Beliefs (BeliefType, Name, Description, BeliefClassType) VALUES ('SDG_ODE_TO_JOY', 'LOC_SDG_ODE_TO_JOY', 'LOC_SDG_ODE_TO_JOY_DESCRIPTION', 'SDG_BELIEF_CLASS_199') ;
-UPDATE Beliefs SET BeliefClassType = 'SDG_BELIEF_CLASS_' || (SELECT cast(COUNT(BeliefType) + 9 as text) FROM Beliefs WHERE BeliefClassType LIKE 'SDG_BELIEF_CLASS_%') WHERE BeliefClassType = 'SDG_BELIEF_CLASS_199' ;
+
+INSERT INTO BeliefClasses (BeliefClassType, Name, MaxInReligion, AdoptionOrder)
+	SELECT 'SDG_BELIEF_CLASS_AMENITIES_' || (SELECT cast(COUNT(BeliefType) + 100 as text) FROM Beliefs WHERE BeliefClassType LIKE 'SDG_BELIEF_CLASS_%'), 'LOC_SDG_BELIEF_CLASS_AMENITIES_NAME', 999, (SELECT COUNT(BeliefType) + 100 FROM Beliefs WHERE BeliefClassType LIKE 'SDG_BELIEF_CLASS_%') ;
+INSERT INTO Beliefs (BeliefType, Name, Description, BeliefClassType) 
+	SELECT 'SDG_ODE_TO_JOY', 'LOC_SDG_ODE_TO_JOY', 'LOC_SDG_ODE_TO_JOY_DESCRIPTION', 'SDG_BELIEF_CLASS_AMENITIES_' || (SELECT cast(COUNT(BeliefType) + 100 as text) FROM Beliefs WHERE BeliefClassType LIKE 'SDG_BELIEF_CLASS_%') ;
 
 INSERT INTO BeliefModifiers (BeliefType, ModifierID)
   WITH counter as (SELECT 2 x UNION SELECT x + 2 FROM counter WHERE x < 18) 
@@ -57,8 +67,11 @@ INSERT INTO ModifierArguments (ModifierId, Name, Value)
 -- ------------------------------------
 -- ------------------------------------
 INSERT INTO Types (Type, Kind) VALUES ('SDG_HALLELUJAH_CHORUS', 'KIND_BELIEF') ; 
-INSERT INTO Beliefs (BeliefType, Name, Description, BeliefClassType) VALUES ('SDG_HALLELUJAH_CHORUS', 'LOC_SDG_HALLELUJAH_CHORUS', 'LOC_SDG_HALLELUJAH_CHORUS_DESCRIPTION', 'SDG_BELIEF_CLASS_199') ;
-UPDATE Beliefs SET BeliefClassType = 'SDG_BELIEF_CLASS_' || (SELECT cast(COUNT(BeliefType) + 9 as text) FROM Beliefs WHERE BeliefClassType LIKE 'SDG_BELIEF_CLASS_%') WHERE BeliefClassType = 'SDG_BELIEF_CLASS_199' ;
+
+INSERT INTO BeliefClasses (BeliefClassType, Name, MaxInReligion, AdoptionOrder)
+	SELECT 'SDG_BELIEF_CLASS_AMENITIES_' || (SELECT cast(COUNT(BeliefType) + 100 as text) FROM Beliefs WHERE BeliefClassType LIKE 'SDG_BELIEF_CLASS_%'), 'LOC_SDG_BELIEF_CLASS_AMENITIES_NAME', 999, (SELECT COUNT(BeliefType) + 100 FROM Beliefs WHERE BeliefClassType LIKE 'SDG_BELIEF_CLASS_%') ;
+INSERT INTO Beliefs (BeliefType, Name, Description, BeliefClassType) 
+	SELECT 'SDG_HALLELUJAH_CHORUS', 'LOC_SDG_HALLELUJAH_CHORUS', 'LOC_SDG_HALLELUJAH_CHORUS_DESCRIPTION', 'SDG_BELIEF_CLASS_AMENITIES_' || (SELECT cast(COUNT(BeliefType) + 100 as text) FROM Beliefs WHERE BeliefClassType LIKE 'SDG_BELIEF_CLASS_%') ;
 
 INSERT INTO BeliefModifiers (BeliefType, ModifierID) VALUES ('SDG_HALLELUJAH_CHORUS', 'SDG_HALLELUJAH_CHORUS_CITIES_ATTACH_ENTERTAINMENT_COMPLEX_FAITH_MODIFIER') ;
 INSERT INTO Modifiers (ModifierId, ModifierType, SubjectRequirementSetId) VALUES ('SDG_HALLELUJAH_CHORUS_CITIES_ATTACH_ENTERTAINMENT_COMPLEX_FAITH_MODIFIER', 'MODIFIER_ALL_CITIES_ATTACH_MODIFIER', 'CITY_FOLLOWS_RELIGION_REQUIREMENTS') ;
@@ -132,5 +145,4 @@ INSERT INTO Modifiers (ModifierId, ModifierType, SubjectRequirementSetId) VALUES
 INSERT INTO ModifierArguments (ModifierId, Name, Value) VALUES
 							  ('SDG_HALLELUJAH_CHORUS_YIELD2', 'YieldType', 'YIELD_FAITH'),
                               ('SDG_HALLELUJAH_CHORUS_YIELD2', 'Amount', 1) ;
-
 */

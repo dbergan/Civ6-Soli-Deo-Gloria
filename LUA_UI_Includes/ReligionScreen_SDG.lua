@@ -9,9 +9,7 @@ include("GameCapabilities");
 -- ===========================================================================
 local PADDING_ICON:number = 5;
 local PADDING_TABS:number = 10;
--- SDG
-local NUM_MAX_BELIEFS:number = 1;
--- /SDG
+local NUM_MAX_BELIEFS:number = 4;
 local NUM_CUSTOM_ICONS:number = 36;
 local PADDING_RELIGION_ICON:number = 8;
 local PADDING_RELIGION_ICON_SMALL:number = 4;
@@ -190,7 +188,9 @@ function UpdateTabs()
 		religionData = GameInfo.Religions[religionType];
 		if(religionData.Pantheon == false and m_pGameReligion:HasBeenFounded(religionType)) then
 			numFoundedReligions = numFoundedReligions + 1;
-			if(religionType ~= m_PlayerReligionType) then
+-- DB - don't add tabs for other players [BM: Remove Foreign Information]
+			if(not GameConfiguration.GetValue("BM_REMOVE_FOREIGN_INFO") and religionType ~= m_PlayerReligionType) then
+-- /DB
 				AddTab(Game.GetReligion():GetName(religionType), religionData, function() ViewReligion(religionType); end);
 			end
 		end
@@ -221,10 +221,15 @@ function UpdateTabs()
 			maxReligions = 0;
 		end
 
--- SDG
--- Takes away the the "3/9" for founded religions (since there is no max with this mod)
-		m_AllReligionsTab = AddTab(Locale.Lookup("LOC_UI_RELIGION_ALL_RELIGIONS", ""), nil, ViewAllReligions);
--- /SDG
+-- DB - remove the all religions tab button [BM: Remove Foreign Information] or remove the "3/9" label on the all religions tab button [SDG]
+		if not GameConfiguration.GetValue("BM_REMOVE_FOREIGN_INFO") then 
+			if Modding.IsModActive('511d5452-9a6a-4230-8bca-5364a5477cee') then  -- SDG
+				m_AllReligionsTab = AddTab(Locale.Lookup("LOC_UI_RELIGION_ALL_RELIGIONS", ""), nil, ViewAllReligions)
+			else
+				m_AllReligionsTab = AddTab(Locale.Lookup("LOC_UI_RELIGION_ALL_RELIGIONS", numFoundedReligions .. "/"  .. maxReligions), nil, ViewAllReligions);
+			end
+		end
+-- /DB
 	end
 
 	-- Determine size of all tabs, to ensure they fit
@@ -361,7 +366,7 @@ function ResetState()
 end
 
 -- ===========================================================================
---	Called if player does not yet have a Pantheon
+--	Called if player does not yet have a Patheon
 -- ===========================================================================
 function WorkingTowardsPantheon()
 	ResetState();
@@ -408,7 +413,7 @@ function WorkingTowardsReligion()
 end
 
 -- ===========================================================================
---	Called if player is creating a new Pantheon / Religion
+--	Called if player is creating a new Patheon / Religion
 -- ===========================================================================
 function RealizeStack(stackControl:table, scrollControl:table, jumpToEnd:boolean)
 	local instanceHeight = 0;
@@ -449,6 +454,7 @@ function SetBeliefSlotDisabled(beliefInst:table, bDisable:boolean)
 end
 
 function PopulateAvailableBeliefs(beliefType:string)
+	local Beliefs : table = {};
 
 	m_Beliefs.IM:ResetInstances();
 
@@ -468,14 +474,33 @@ function PopulateAvailableBeliefs(beliefType:string)
 			not m_pGameReligion:IsTooManyForReligion(row.Index, m_PlayerReligionType) and
 			((beliefType ~= nil and row.BeliefClassType == beliefType) or
 			 (beliefType == nil and row.BeliefClassType ~= "BELIEF_CLASS_PANTHEON"))) then
-			local beliefInst:table = m_Beliefs.IM:GetInstance();
-			beliefInst.BeliefLabel:LocalizeAndSetText(Locale.ToUpper(row.Name));
-			beliefInst.BeliefDescription:LocalizeAndSetText(row.Description);
-            beliefInst.BeliefButton:RegisterCallback(Mouse.eMouseEnter, function() UI.PlaySound("Main_Menu_Mouse_Over"); end);
-			beliefInst.BeliefButton:RegisterCallback(Mouse.eLClick, function() OnBeliefSelected(row.Index, beliefInst) end);
-			SetBeliefIcon(beliefInst.BeliefIcon, row.BeliefType, SIZE_BELIEF_ICON_LARGE);
-			SetBeliefSlotDisabled(beliefInst, false);
+			table.insert(Beliefs, row);
 		end
+	end
+
+-- DB - properly sort the add belief tables [ALL]
+	-- table.sort(Beliefs, function(a, b)
+	--	return a.BeliefClassType > b.BeliefClassType;
+	--	end );
+	table.sort(Beliefs, function(a,b)
+		if string.find(a.BeliefClassType, "SDG_BELIEF_CLASS") and string.find(b.BeliefClassType, "SDG_BELIEF_CLASS") then
+			return string.sub(a.BeliefClassType, -3) < string.sub(b.BeliefClassType, -3)
+		elseif a.BeliefClassType ~= b.BeliefClassType then
+			return a.BeliefClassType < b.BeliefClassType
+		else
+			return a.BeliefType < b.BeliefType
+		end
+	end)
+-- /DB
+
+	for _, row in ipairs(Beliefs) do
+		local beliefInst:table = m_Beliefs.IM:GetInstance();
+		beliefInst.BeliefLabel:LocalizeAndSetText(Locale.ToUpper(row.Name));
+		beliefInst.BeliefDescription:LocalizeAndSetText(row.Description);
+		beliefInst.BeliefButton:RegisterCallback(Mouse.eMouseEnter, function() UI.PlaySound("Main_Menu_Mouse_Over"); end);
+		beliefInst.BeliefButton:RegisterCallback(Mouse.eLClick, function() OnBeliefSelected(row.Index, beliefInst) end);
+		SetBeliefIcon(beliefInst.BeliefIcon, row.BeliefType, SIZE_BELIEF_ICON_LARGE);
+		SetBeliefSlotDisabled(beliefInst, false);
 	end
 
 	RealizeStack(m_Beliefs.Stack, m_Beliefs.Scrollbar);
@@ -621,6 +646,7 @@ function ChooseReligion()
 	Controls.PendingReligionTitle:LocalizeAndSetText(Locale.ToUpper("LOC_UI_RELIGION_NO_RELIGION_CHOSEN"));
 	Controls.PendingReligionStatus:LocalizeAndSetText(Locale.ToUpper("LOC_UI_RELIGION_FOUNDING_RELIGION"));
 	Controls.PendingReligionEffect:LocalizeAndSetText("LOC_UI_RELIGION_FOUNDING_RELIGION_INSTRUCTIONS");
+
 	Controls.ChooseReligionName:RegisterStringChangedCallback(function(editBox)
 		local userInput:string = editBox:GetText();
 		if IsReligionNameValid(userInput) then
@@ -659,20 +685,15 @@ function ChooseReligion()
 				SetReligionIcon(Controls.PendingReligionImage, row.ReligionType, SIZE_RELIGION_ICON_HUGE, row.Color);
 
 				local canChangeName = GameCapabilities.HasCapability("CAPABILITY_RENAME");
-				
---		SDG	
---	    Trying to make it so that players can change the name of built-in religions, but there's a catch-22:
---      The code here works, but the name change currently doesn't stick (it reverts back to the built-in name). The fix to that is to set RequiresCustomName = 1 for each religion in the SQL (see SDG_GameDataLate),
---      but doing that means that the computer founds religions with blank names. So for the time being, the SQL line is commented out.
-				if(canChangeName) then
-					Controls.ConfirmReligion:SetDisabled(true);
-					Controls.ChooseReligionName:SetDisabled(false);
-					Controls.ChooseReligionNameButton:SetDisabled(false);
-					Controls.PendingReligionTitle:SetText(religionName);
-					Controls.ChooseReligionName:SetText(religionName);
-				else
---[[
-                if(row.RequiresCustomName and canChangeName) then
+-- DB - allow changing of religion names [SDG: All Religions Can Have Custom Names]
+				if GameConfiguration.GetValue("SDG_ALL_CUSTOM_NAMES") then
+					Controls.ConfirmReligion:SetDisabled(true)
+					Controls.ChooseReligionName:SetDisabled(false)
+					Controls.ChooseReligionNameButton:SetDisabled(false)
+					Controls.PendingReligionTitle:SetText(religionName)
+					Controls.ChooseReligionName:SetText(religionName)
+				elseif(row.RequiresCustomName and canChangeName) then
+-- /DB
 					Controls.ConfirmReligion:SetDisabled(true);
 					Controls.PendingReligionTitle:LocalizeAndSetText("LOC_UI_RELIGION_REQUIRES_NAME");
 					Controls.ChooseReligionName:SetDisabled(false);
@@ -680,9 +701,6 @@ function ChooseReligion()
 					Controls.ChooseReligionName:SetText("");
 					Controls.ChooseReligionName:TakeFocus();
 				else
---		/SDG
---]]
-
 					Controls.ChooseReligionName:SetDisabled(true);
 					Controls.ChooseReligionNameButton:SetDisabled(true);
 					Controls.ChooseReligionName:SetText(religionName);
@@ -700,13 +718,11 @@ end
 -- ===========================================================================
 function IsReligionNameValid(name:string)
 	if name ~= nil then
---[[	SDG
 		-- If it's really just the label in the customize name edit box, mark it as not being valid.
 		if Locale.ToUpper(name) == Locale.ToUpper(Locale.Lookup("LOC_UI_RELIGION_CHOOSE_RELIGION_NAME")) then
 			return false;
 		end
---]]
--- /SDG
+
 		for i = 1, #name do
 		local c = name:sub(i,i)
 			if(c ~= " ") then return true; end
@@ -773,9 +789,7 @@ function SelectReligionBeliefs()
 		Controls.AddBeliefsPantheonTitle:SetText(Locale.ToUpper(Locale.Lookup("LOC_UI_RELIGION_PANTHEON_NAME", pantheonBelief.Name)));
 		Controls.AddBeliefsPantheonDescription:LocalizeAndSetText(pantheonBelief.Description);
 		SetBeliefIcon(Controls.AddBeliefsPantheonIcon, pantheonBelief.BeliefType, SIZE_BELIEF_ICON_LARGE);
-
 		Controls.AddBeliefsReligionTitle:LocalizeAndSetText(Locale.ToUpper(religionData.Name));
-
 		Controls.AddBeliefTitle:LocalizeAndSetText(Locale.ToUpper("LOC_UI_RELIGION_CHOOSE_A_BELIEF"));
 		SetReligionIcon(Controls.AddBeliefsReligionImage, religionData.ReligionType, SIZE_RELIGION_ICON_HUGE, religionData.Color);
 
@@ -808,9 +822,13 @@ function SelectReligionBeliefs()
 		local holyCity:table = CityManager.GetCity(playerReligion:GetHolyCityID());
 		Controls.AddBeliefsReligionHolyCity:SetText(Locale.ToUpper(Locale.Lookup("LOC_UI_RELIGION_HOLY_CITY", holyCity:GetName())));
 
-		Controls.AddBeliefsReligionTitle:LocalizeAndSetText(Locale.ToUpper(religionData.Name));
+-- DB - Show custom religion names on select belief screen [ALL]
+		-- Controls.AddBeliefsReligionTitle:LocalizeAndSetText(Locale.ToUpper(religionData.Name));
+		Controls.AddBeliefsReligionTitle:LocalizeAndSetText(Locale.ToUpper(Game.GetReligion():GetName(religionData.Index)))
 		Controls.AddBeliefsReligionFounder:SetText(Locale.ToUpper(Locale.Lookup("LOC_UI_RELIGION_FOUNDER_NAME", civName)));
-		Controls.AddBeliefsReligionBeliefsHeader:SetText(Locale.ToUpper(Locale.Lookup("LOC_UI_RELIGION_BELIEFS_OF_RELIGION", religionData.Name)))
+		-- Controls.AddBeliefsReligionBeliefsHeader:SetText(Locale.ToUpper(Locale.Lookup("LOC_UI_RELIGION_BELIEFS_OF_RELIGION", religionData.Name)))
+		Controls.AddBeliefsReligionBeliefsHeader:SetText(Locale.ToUpper(Locale.Lookup("LOC_UI_RELIGION_BELIEFS_OF_RELIGION", Game.GetReligion():GetName(religionData.Index))))
+-- /DB
 		RealizeStack(Controls.AddBeliefsReligionStack, Controls.AddBeliefsReligionScroll);
 
 		if table.count(m_SelectedBeliefs) > 0 then
@@ -917,11 +935,10 @@ function ConfirmReligionBeliefs()
 				local tParameters = {};
 				tParameters[PlayerOperations.PARAM_INSERT_MODE] = PlayerOperations.VALUE_EXCLUSIVE;
 				tParameters[PlayerOperations.PARAM_RELIGION_TYPE] = GameInfo.Religions[m_SelectedReligion.ID].Hash;
--- SDG
---				if(GameInfo.Religions[m_SelectedReligion.ID].RequiresCustomName) then
+				if(GameInfo.Religions[m_SelectedReligion.ID].RequiresCustomName) then
 					tParameters[PlayerOperations.PARAM_RELIGION_CUSTOM_NAME] = Controls.ChooseReligionName:GetText();
---				end
--- /SDG			
+				end
+			
 				UI.RequestPlayerOperation(Game.GetLocalPlayer(), PlayerOperations.FOUND_RELIGION, tParameters);
 			end
 
@@ -1273,7 +1290,13 @@ end
 
 -- ==============================================
 function AddLockedBeliefs(religion)
+
 	local numLockedBeliefs:number = NUM_MAX_BELIEFS - table.count(religion.Beliefs);
+-- DB - don't add "locked beliefs" to the grid [SDG]
+	if Modding.IsModActive('511d5452-9a6a-4230-8bca-5364a5477cee') then  -- SDG
+		numLockedBeliefs = 0
+	end
+-- /DB
 	for i = 1, numLockedBeliefs do
 		local beliefInst:table = m_ReligionBeliefsIM:GetInstance();
 		beliefInst.BeliefBG:SetColor(UI.GetColorValueFromHexLiteral(0xFF808080));
@@ -1629,4 +1652,3 @@ function Initialize()
 
 end
 Initialize();
-

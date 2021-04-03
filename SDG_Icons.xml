@@ -13,7 +13,7 @@
 
 		<Row Name="ICON_SDG_MANNA_FROM_HEAVEN"              Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="21" />
 		<Row Name="ICON_SDG_CHILD_MARRIAGE"                 Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="21" />
-		<Row Name="ICON_SDG_JOSEPH"                         Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="21" />
+		<Row Name="ICON_SDG_BE_FRUITFUL"                    Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="21" />
 		<Row Name="ICON_SDG_POLYGAMY"                       Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="21" />
 		<Row Name="ICON_SDG_EVERY_SPERM_IS_SACRED"          Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="21" />
 		<Row Name="ICON_SDG_FOOD_FOR_PEACE"                 Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="21" />
@@ -24,11 +24,13 @@
 		<Row Name="ICON_SDG_DESERET"                        Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="15" />
 		<Row Name="ICON_SDG_PROTESTANT_WORK_ETHIC"          Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="15" />
 
+		<Row Name="ICON_SDG_SWORD_OF_GIDEON"                Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="18" />
 		<Row Name="ICON_SDG_JOSHUAS_TRUMPET"                Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="18" />
 		<Row Name="ICON_SDG_VENI_VIDI_VICI"                 Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="18" />
 		<Row Name="ICON_SDG_CARTHAGO_DELENDA_EST"           Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="18" />
 		<Row Name="ICON_SDG_SHATTER_THE_TEETH"			    Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="18" />
 		<Row Name="ICON_SDG_A_MIGHTY_FORTRESS"              Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="18" />
+		<Row Name="ICON_SDG_ECRASEZ_LINFAME"                Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="18" />
 		<Row Name="ICON_SDG_A_MEMORY_OF_SOLFERINO"          Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="18" />
 		<Row Name="ICON_SDG_ARMOR_OF_GOD"                   Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="18" />
 		<Row Name="ICON_SDG_WALL_OF_RIGHTEOUSNESS"          Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="18" />
@@ -44,8 +46,6 @@
 		<Row Name="ICON_SDG_TRUTH_CANNOT_CONTRADICT_TRUTH"  Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="17" />
 
 		<Row Name="ICON_SDG_WILDERNESS_PREACHERS"           Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="13" />
-		<Row Name="ICON_SDG_ITINERANT_MINISTERS"            Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="13" />
-		<Row Name="ICON_SDG_DESERT_ANCHORITES"              Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="13" />
 		<Row Name="ICON_SDG_CIRCUIT_RIDERS"                 Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="13" />
 
 		<Row Name="ICON_SDG_PSALMS"                         Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="24" />
@@ -81,7 +81,8 @@
 		<Row Name="ICON_SDG_AD_MAIOREM_DEI_GLORIAM"         Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="22" />
 		<Row Name="ICON_SDG_RELIQUARIES"                    Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="22" />
 		<Row Name="ICON_SDG_SYNODUS_HORRENDA"               Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="22" />
-		<Row Name="ICON_SDG_ECRASEZ_LINFAME"                Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="22" />
+		<Row Name="ICON_SDG_ITINERANT_MINISTERS"            Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="22" />
+		<Row Name="ICON_SDG_DESERT_ANCHORITES"              Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="22" />
 		<Row Name="ICON_SDG_FULTON_SHEEN"                   Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="22" />
 
 		<Row Name="ICON_SDG_OKTOBERFEST"                    Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="12" />
@@ -109,14 +110,18 @@
 		<Row Name="ICON_SDG_THALIA"                         Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="27" />
 		<Row Name="ICON_SDG_ERATO"                          Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="27" />
 		<Row Name="ICON_SDG_URANIA"                         Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="27" />
+		<Row Name="ICON_SDG_POLYHYMNIA"                     Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="27" />
 
 		<Row Name="ICON_SDG_HANDCART_PIONEERS"              Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="2" />
 		<Row Name="ICON_SDG_HABITAT_FOR_HUMANITY"           Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="2" />
+		<Row Name="ICON_SDG_SEA_ORG"                        Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="2" />
 		<Row Name="ICON_SDG_NEHEMIAH"                       Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="2" />
+		<Row Name="ICON_SDG_PHARAOH_AND_JOSEPH"             Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="2" />
+		<Row Name="ICON_SDG_YORISHIRO"						Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="2" />
 		<Row Name="ICON_SDG_JESUIT_EDUCATION"               Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="2" />
 		<Row Name="ICON_SDG_JIHAD"                          Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="2" />
 		<Row Name="ICON_SDG_XMAS"                           Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="2" />
-		<Row Name="ICON_SDG_SEA_ORG"                        Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="2" />
+		<Row Name="ICON_SDG_FISHERS_OF_MEN"                 Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="2" />
 		<Row Name="ICON_SDG_ECCLESIASTICAL_COMMISSION"      Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="2" />
 		<Row Name="ICON_SDG_SOLIDARITY"                     Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="2" />
 		<Row Name="ICON_SDG_FAMILY_HOME_EVENING"            Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="2" />
@@ -124,16 +129,6 @@
 		<Row Name="ICON_SDG_SHAKER_CELIBACY"                Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="2" />
 
 
-		<Row Name="ICON_SDG_BLANK_PANTHEON1"                Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
-		<Row Name="ICON_SDG_BLANK_PANTHEON2"                Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
-		<Row Name="ICON_SDG_BLANK_PANTHEON3"                Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
-		<Row Name="ICON_SDG_BLANK_PANTHEON4"                Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
-		<Row Name="ICON_SDG_BLANK_PANTHEON5"                Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
-		<Row Name="ICON_SDG_BLANK_PANTHEON6"                Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
-		<Row Name="ICON_SDG_BLANK_PANTHEON7"                Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
-		<Row Name="ICON_SDG_BLANK_PANTHEON8"                Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
-		<Row Name="ICON_SDG_BLANK_PANTHEON9"                Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
-		<Row Name="ICON_SDG_BLANK_PANTHEON10"               Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
 		<Row Name="ICON_SDG_BLANK_PANTHEON11"               Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
 		<Row Name="ICON_SDG_BLANK_PANTHEON12"               Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
 		<Row Name="ICON_SDG_BLANK_PANTHEON13"               Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
@@ -143,17 +138,28 @@
 		<Row Name="ICON_SDG_BLANK_PANTHEON17"               Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
 		<Row Name="ICON_SDG_BLANK_PANTHEON18"               Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
 		<Row Name="ICON_SDG_BLANK_PANTHEON19"               Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
+		<Row Name="ICON_SDG_BLANK_PANTHEON20"               Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
+		<Row Name="ICON_SDG_BLANK_PANTHEON21"               Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
+		<Row Name="ICON_SDG_BLANK_PANTHEON22"               Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
+		<Row Name="ICON_SDG_BLANK_PANTHEON23"               Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
+		<Row Name="ICON_SDG_BLANK_PANTHEON24"               Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
+		<Row Name="ICON_SDG_BLANK_PANTHEON25"               Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
+		<Row Name="ICON_SDG_BLANK_PANTHEON26"               Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
+		<Row Name="ICON_SDG_BLANK_PANTHEON27"               Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
+		<Row Name="ICON_SDG_BLANK_PANTHEON28"               Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
+		<Row Name="ICON_SDG_BLANK_PANTHEON29"               Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
+		<Row Name="ICON_SDG_BLANK_PANTHEON30"               Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
+		<Row Name="ICON_SDG_BLANK_PANTHEON31"               Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
+		<Row Name="ICON_SDG_BLANK_PANTHEON32"               Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
+		<Row Name="ICON_SDG_BLANK_PANTHEON33"               Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
+		<Row Name="ICON_SDG_BLANK_PANTHEON34"               Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
+		<Row Name="ICON_SDG_BLANK_PANTHEON35"               Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
+		<Row Name="ICON_SDG_BLANK_PANTHEON36"               Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
+		<Row Name="ICON_SDG_BLANK_PANTHEON37"               Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
+		<Row Name="ICON_SDG_BLANK_PANTHEON38"               Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
+		<Row Name="ICON_SDG_BLANK_PANTHEON39"               Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
+		<Row Name="ICON_SDG_BLANK_PANTHEON40"               Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
 
-		<Row Name="ICON_SDG_FOLLOWER1"                      Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
-		<Row Name="ICON_SDG_FOLLOWER2"                      Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
-		<Row Name="ICON_SDG_FOLLOWER3"                      Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
-		<Row Name="ICON_SDG_FOLLOWER4"                      Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
-		<Row Name="ICON_SDG_FOLLOWER5"                      Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
-		<Row Name="ICON_SDG_FOLLOWER6"                      Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
-		<Row Name="ICON_SDG_FOLLOWER7"                      Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
-		<Row Name="ICON_SDG_FOLLOWER8"                      Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
-		<Row Name="ICON_SDG_FOLLOWER9"                      Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
-		<Row Name="ICON_SDG_FOLLOWER10"                     Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
 		<Row Name="ICON_SDG_FOLLOWER11"                     Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
 		<Row Name="ICON_SDG_FOLLOWER12"                     Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
 		<Row Name="ICON_SDG_FOLLOWER13"                     Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
@@ -193,6 +199,16 @@
 		<Row Name="ICON_SDG_FOLLOWER47"                     Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
 		<Row Name="ICON_SDG_FOLLOWER48"                     Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
 		<Row Name="ICON_SDG_FOLLOWER49"                     Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
+		<Row Name="ICON_SDG_FOLLOWER50"                     Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
+		<Row Name="ICON_SDG_FOLLOWER51"                     Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
+		<Row Name="ICON_SDG_FOLLOWER52"                     Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
+		<Row Name="ICON_SDG_FOLLOWER53"                     Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
+		<Row Name="ICON_SDG_FOLLOWER54"                     Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
+		<Row Name="ICON_SDG_FOLLOWER55"                     Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
+		<Row Name="ICON_SDG_FOLLOWER56"                     Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
+		<Row Name="ICON_SDG_FOLLOWER57"                     Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
+		<Row Name="ICON_SDG_FOLLOWER58"                     Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
+		<Row Name="ICON_SDG_FOLLOWER59"                     Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="1" />
 
 		<!-- RETIRED -->
 		<Row Name="ICON_SDG_ABIDE_WITH_ME"                  Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="7" />
@@ -211,7 +227,6 @@
 		<Row Name="ICON_SDG_ZEN_MEDITATION"                 Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="0" />
 		<Row Name="ICON_SDG_PARSONAGES"                     Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="20" />
 		<Row Name="ICON_SDG_FOOD_PANTRY"                    Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="21" />
-		<Row Name="ICON_SDG_BE_FRUITFUL"                    Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="21" />
 		<Row Name="ICON_SDG_KIBBUTZIM"                      Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="21" />
 		<Row Name="ICON_SDG_CHURCH_PROPERTY"                Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="11" />
 		<Row Name="ICON_SDG_TITHE"                          Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="11" />

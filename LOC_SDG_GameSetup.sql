@@ -1,6 +1,12 @@
 INSERT OR REPLACE INTO LocalizedText 
 (Tag, Text, Language) VALUES
 
+('LOC_DB_FOOTER_NAME', 'End of mod options', 'en_US'),
+('LOC_DB_FOOTER_DESC', 'This value doesn''t do anything. Just using the slider tool as a section footer.', 'en_US'),
+
+('LOC_SDG_HEADER_NAME', '[ICON_Faith]Soli Deo Gloria[ICON_Faith] options', 'en_US'),
+('LOC_SDG_HEADER_DESC', '[ICON_Faith]SOLI DEO GLORIA[ICON_Faith][NEWLINE][NEWLINE]This value doesn''t do anything. Just using the slider tool as a section header. Drop me a line if you know of a better way to do this.', 'en_US'),
+
 ('LOC_SDG_MOD_NOTE', '[NEWLINE][NEWLINE][COLOR_Red]from mod "DB [ICON_Faith]Soli Deo Gloria[ICON_Faith]"[ENDCOLOR]', 'en_US'),
 
 ('LOC_SDG_OLYMPIC_PANTHEONS_NAME', 'Olympic Pantheons', 'en_US'),

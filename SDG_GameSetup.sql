@@ -3,91 +3,103 @@ Domain, DefaultValue, ConfigurationGroup, ConfigurationId, GroupId, Visible, Rea
 SupportsSinglePlayer, SupportsLANMultiplayer, SupportsInternetMultiplayer, SupportsHotSeat, SupportsPlayByCloud,
 ChangeableAfterGameStart, ChangeableAfterPlayByCloudMatchCreate, SortIndex) VALUES 
 
+('SDG_HEADER', 'LOC_SDG_HEADER_NAME', 'LOC_SDG_HEADER_DESC', 
+'EmptyDomain', 1, 'Game', 'SDG_HEADER', 'AdvancedOptions', 1, 0, 
+1, 1, 1, 1, 1, 
+0, 0, 340),
 
 ('SDG_OLYMPIC_PANTHEONS', 'LOC_SDG_OLYMPIC_PANTHEONS_NAME', 'LOC_SDG_OLYMPIC_PANTHEONS_DESC', 
 'bool', 1, 'Game', 'SDG_OLYMPIC_PANTHEONS', 'AdvancedOptions', 1, 0, 
 1, 1, 1, 1, 1, 
-0, 0, 330),
+0, 0, 341),
 
 ('SDG_REMOVE_CONDEMN_HERETIC', 'LOC_SDG_REMOVE_CONDEMN_HERETIC_NAME', 'LOC_SDG_REMOVE_CONDEMN_HERETIC_DESC', 
 'bool', 1, 'Game', 'SDG_REMOVE_CONDEMN_HERETIC', 'AdvancedOptions', 1, 0, 
 1, 1, 1, 1, 1, 
-0, 0, 331),
+0, 0, 342),
 
 ('SDG_ONE_CLEANSE_INQUISITORS', 'LOC_SDG_ONE_CLEANSE_INQUISITORS_NAME', 'LOC_SDG_ONE_CLEANSE_INQUISITORS_DESC', 
 'bool', 1, 'Game', 'SDG_ONE_CLEANSE_INQUISITORS', 'AdvancedOptions', 1, 0, 
 1, 1, 1, 1, 1, 
-0, 0, 332),
+0, 0, 343),
 
 ('SDG_DONT_NEED_INQUISITION', 'LOC_SDG_DONT_NEED_INQUISITION_NAME', 'LOC_SDG_DONT_NEED_INQUISITION_DESC', 
 'bool', 1, 'Game', 'SDG_DONT_NEED_INQUISITION', 'AdvancedOptions', 1, 0, 
 1, 1, 1, 1, 1, 
-0, 0, 333),
+0, 0, 344),
 
 ('SDG_INQUISITORS_FROM_SHRINES', 'LOC_SDG_INQUISITORS_FROM_SHRINES_NAME', 'LOC_SDG_INQUISITORS_FROM_SHRINES_DESC', 
 'bool', 1, 'Game', 'SDG_INQUISITORS_FROM_SHRINES', 'AdvancedOptions', 1, 0, 
 1, 1, 1, 1, 1, 
-0, 0, 334),
+0, 0, 345),
 
 ('SDG_RELIGIOUS_UNITS_TWO_MOVES', 'LOC_SDG_RELIGIOUS_UNITS_TWO_MOVES_NAME', 'LOC_SDG_RELIGIOUS_UNITS_TWO_MOVES_DESC', 
 'bool', 1, 'Game', 'SDG_RELIGIOUS_UNITS_TWO_MOVES', 'AdvancedOptions', 1, 0, 
 1, 1, 1, 1, 1, 
-0, 0, 335),
+0, 0, 346),
 
 ('SDG_NO_RELIGIOUS_SEA_SPIES', 'LOC_SDG_NO_RELIGIOUS_SEA_SPIES_NAME', 'LOC_SDG_NO_RELIGIOUS_SEA_SPIES_DESC', 
 'bool', 1, 'Game', 'SDG_NO_RELIGIOUS_SEA_SPIES', 'AdvancedOptions', 1, 0, 
 1, 1, 1, 1, 1, 
-0, 0, 336),
+0, 0, 347),
 
 ('SDG_ALL_HS3_BUILDINGS', 'LOC_SDG_ALL_HS3_BUILDINGS_NAME', 'LOC_SDG_ALL_HS3_BUILDINGS_DESC', 
 'bool', 1, 'Game', 'SDG_ALL_HS3_BUILDINGS', 'AdvancedOptions', 1, 0, 
 1, 1, 1, 1, 1, 
-0, 0, 337),
+0, 0, 348),
 
 ('SDG_CATHEDRALS_HOLD_RELICS', 'LOC_SDG_CATHEDRALS_HOLD_RELICS_NAME', 'LOC_SDG_CATHEDRALS_HOLD_RELICS_DESC', 
 'bool', 1, 'Game', 'SDG_CATHEDRALS_HOLD_RELICS', 'AdvancedOptions', 1, 0, 
 1, 1, 1, 1, 1, 
-0, 0, 338),
+0, 0, 349),
 
 ('SDG_KOTOKUIN_TO_THEOLGY', 'LOC_SDG_KOTOKUIN_TO_THEOLGY_NAME', 'LOC_SDG_KOTOKUIN_TO_THEOLGY_DESC', 
 'bool', 1, 'Game', 'SDG_KOTOKUIN_TO_THEOLGY', 'AdvancedOptions', 1, 0, 
 1, 1, 1, 1, 1, 
-0, 0, 339),
+0, 0, 350),
 
 
 ('SDG_ALL_CUSTOM_NAMES', 'LOC_SDG_ALL_CUSTOM_NAMES_NAME', 'LOC_SDG_ALL_CUSTOM_NAMES_DESC', 
 'bool', 0, 'Game', 'SDG_ALL_CUSTOM_NAMES', 'AdvancedOptions', 1, 0, 
 1, 1, 1, 1, 1, 
-0, 0, 350),
+0, 0, 360),
 
 ('SDG_DOUBLE_BELIEFS', 'LOC_SDG_DOUBLE_BELIEFS_NAME', 'LOC_SDG_DOUBLE_BELIEFS_DESC', 
 'bool', 0, 'Game', 'SDG_DOUBLE_BELIEFS', 'AdvancedOptions', 1, 0, 
 1, 1, 1, 1, 1, 
-0, 0, 351),
+0, 0, 361),
 
 ('SDG_COMBAT_DOESNT_PRESSURE', 'LOC_SDG_COMBAT_DOESNT_PRESSURE_NAME', 'LOC_SDG_COMBAT_DOESNT_PRESSURE_DESC', 
 'bool', 0, 'Game', 'SDG_COMBAT_DOESNT_PRESSURE', 'AdvancedOptions', 1, 0, 
 1, 1, 1, 1, 1, 
-0, 0, 352),
+0, 0, 362),
 
 ('SDG_BUY_HSBUILDINGS_WITH_FAITH', 'LOC_SDG_BUY_HSBUILDINGS_WITH_FAITH_NAME', 'LOC_SDG_BUY_HSBUILDINGS_WITH_FAITH_DESC', 
 'bool', 0, 'Game', 'SDG_BUY_HSBUILDINGS_WITH_FAITH', 'AdvancedOptions', 1, 0, 
 1, 1, 1, 1, 1, 
-0, 0, 353),
+0, 0, 363),
 
 ('SDG_MARTYRS_LOSE_CS', 'LOC_SDG_MARTYRS_LOSE_CS_NAME', 'LOC_SDG_MARTYRS_LOSE_CS_DESC', 
 'bool', 0, 'Game', 'SDG_MARTYRS_LOSE_CS', 'AdvancedOptions', 1, 0, 
 1, 1, 1, 1, 1, 
-0, 0, 354),
+0, 0, 364),
 
 ('SDG_REMOVE_HEATHEN_CONVERSION', 'LOC_SDG_REMOVE_HEATHEN_CONVERSION_NAME', 'LOC_SDG_REMOVE_HEATHEN_CONVERSION_DESC', 
 'bool', 0, 'Game', 'SDG_REMOVE_HEATHEN_CONVERSION', 'AdvancedOptions', 1, 0, 
 1, 1, 1, 1, 1, 
-0, 0, 355),
+0, 0, 365),
 
 ('SDG_RELIGION_TESTER_HELPER', 'LOC_SDG_RELIGION_TESTER_HELPER_NAME', 'LOC_SDG_RELIGION_TESTER_HELPER_DESC', 
 'bool', 0, 'Game', 'SDG_RELIGION_TESTER_HELPER', 'AdvancedOptions', 1, 0, 
 1, 1, 1, 1, 1, 
-0, 0, 356)
+0, 0, 366),
 
-;
+
+
+('DB_FOOTER', 'LOC_DB_FOOTER_NAME', 'LOC_DB_FOOTER_DESC', 
+'EmptyDomain', 1, 'Game', 'DB_FOOTER', 'AdvancedOptions', 1, 0, 
+1, 1, 1, 1, 1, 
+0, 0, 380) ;
+
+INSERT OR REPLACE INTO DomainRanges (Domain, MinimumValue, MaximumValue) VALUES
+('EmptyDomain', 0, 1) ;

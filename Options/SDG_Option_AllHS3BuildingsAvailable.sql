@@ -10,5 +10,3 @@ INSERT INTO MutuallyExclusiveBuildings (Building, MutuallyExclusiveBuilding)
 		a.PrereqDistrict = "DISTRICT_HOLY_SITE" AND a.BuildingType != "BUILDING_SHRINE" AND a.BuildingType != "BUILDING_TEMPLE" AND a.BuildingType != "BUILDING_STAVE_CHURCH" AND a.BuildingType != "BUILDING_PRASAT" AND 
 		b.PrereqDistrict = "DISTRICT_HOLY_SITE" AND b.BuildingType != "BUILDING_SHRINE" AND b.BuildingType != "BUILDING_TEMPLE" AND b.BuildingType != "BUILDING_STAVE_CHURCH" AND b.BuildingType != "BUILDING_PRASAT" ;
 
--- Remove "building" class of belief
-DELETE FROM Beliefs WHERE BeliefClassType = "BELIEF_CLASS_WORSHIP" ;

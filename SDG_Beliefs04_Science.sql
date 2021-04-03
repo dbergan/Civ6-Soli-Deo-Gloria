@@ -6,8 +6,11 @@
 -- ------------------------------------
 -- ------------------------------------
 INSERT INTO Types (Type, Kind) VALUES ('SDG_THE_WATCHMAKER', 'KIND_BELIEF') ; 
-INSERT INTO Beliefs (BeliefType, Name, Description, BeliefClassType) VALUES ('SDG_THE_WATCHMAKER', 'LOC_SDG_THE_WATCHMAKER', 'LOC_SDG_THE_WATCHMAKER_DESCRIPTION', 'SDG_BELIEF_CLASS_199') ;
-UPDATE Beliefs SET BeliefClassType = 'SDG_BELIEF_CLASS_' || (SELECT cast(COUNT(BeliefType) + 9 as text) FROM Beliefs WHERE BeliefClassType LIKE 'SDG_BELIEF_CLASS_%') WHERE BeliefClassType = 'SDG_BELIEF_CLASS_199' ;
+
+INSERT INTO BeliefClasses (BeliefClassType, Name, MaxInReligion, AdoptionOrder)
+	SELECT 'SDG_BELIEF_CLASS_SCIENCE_' || (SELECT cast(COUNT(BeliefType) + 100 as text) FROM Beliefs WHERE BeliefClassType LIKE 'SDG_BELIEF_CLASS_%'), 'LOC_SDG_BELIEF_CLASS_SCIENCE_NAME', 999, (SELECT COUNT(BeliefType) + 100 FROM Beliefs WHERE BeliefClassType LIKE 'SDG_BELIEF_CLASS_%') ;
+INSERT INTO Beliefs (BeliefType, Name, Description, BeliefClassType) 
+	SELECT 'SDG_THE_WATCHMAKER', 'LOC_SDG_THE_WATCHMAKER', 'LOC_SDG_THE_WATCHMAKER_DESCRIPTION', 'SDG_BELIEF_CLASS_SCIENCE_' || (SELECT cast(COUNT(BeliefType) + 100 as text) FROM Beliefs WHERE BeliefClassType LIKE 'SDG_BELIEF_CLASS_%') ;
 
 INSERT INTO BeliefModifiers (BeliefType, ModifierID) VALUES ('SDG_THE_WATCHMAKER', 'SDG_THE_WATCHMAKER_BASE_YIELD') ;
 INSERT INTO Modifiers (ModifierId, ModifierType, SubjectRequirementSetId) VALUES
@@ -23,8 +26,11 @@ INSERT INTO ModifierArguments (ModifierId, Name, Value) VALUES
 -- ------------------------------------
 -- ------------------------------------
 INSERT INTO Types (Type, Kind) VALUES ('SDG_A_FINE_TUNED_UNIVERSE', 'KIND_BELIEF') ; 
-INSERT INTO Beliefs (BeliefType, Name, Description, BeliefClassType) VALUES ('SDG_A_FINE_TUNED_UNIVERSE', 'LOC_SDG_A_FINE_TUNED_UNIVERSE', 'LOC_SDG_A_FINE_TUNED_UNIVERSE_DESCRIPTION', 'SDG_BELIEF_CLASS_199') ;
-UPDATE Beliefs SET BeliefClassType = 'SDG_BELIEF_CLASS_' || (SELECT cast(COUNT(BeliefType) + 9 as text) FROM Beliefs WHERE BeliefClassType LIKE 'SDG_BELIEF_CLASS_%') WHERE BeliefClassType = 'SDG_BELIEF_CLASS_199' ;
+
+INSERT INTO BeliefClasses (BeliefClassType, Name, MaxInReligion, AdoptionOrder)
+	SELECT 'SDG_BELIEF_CLASS_SCIENCE_' || (SELECT cast(COUNT(BeliefType) + 100 as text) FROM Beliefs WHERE BeliefClassType LIKE 'SDG_BELIEF_CLASS_%'), 'LOC_SDG_BELIEF_CLASS_SCIENCE_NAME', 999, (SELECT COUNT(BeliefType) + 100 FROM Beliefs WHERE BeliefClassType LIKE 'SDG_BELIEF_CLASS_%') ;
+INSERT INTO Beliefs (BeliefType, Name, Description, BeliefClassType) 
+	SELECT 'SDG_A_FINE_TUNED_UNIVERSE', 'LOC_SDG_A_FINE_TUNED_UNIVERSE', 'LOC_SDG_A_FINE_TUNED_UNIVERSE_DESCRIPTION', 'SDG_BELIEF_CLASS_SCIENCE_' || (SELECT cast(COUNT(BeliefType) + 100 as text) FROM Beliefs WHERE BeliefClassType LIKE 'SDG_BELIEF_CLASS_%') ;
 
 INSERT INTO BeliefModifiers (BeliefType, ModifierID) VALUES ('SDG_A_FINE_TUNED_UNIVERSE', 'SDG_A_FINE_TUNED_UNIVERSE_BASE_YIELD') ;
 INSERT INTO Modifiers (ModifierId, ModifierType, SubjectRequirementSetId) VALUES
@@ -52,8 +58,11 @@ INSERT INTO ModifierArguments (ModifierId, Name, Value)
 -- ------------------------------------
 -- ------------------------------------
 INSERT INTO Types (Type, Kind) VALUES ('SDG_IRREDUCIBLE_COMPLEXITY', 'KIND_BELIEF') ; 
-INSERT INTO Beliefs (BeliefType, Name, Description, BeliefClassType) VALUES ('SDG_IRREDUCIBLE_COMPLEXITY', 'LOC_SDG_IRREDUCIBLE_COMPLEXITY', 'LOC_SDG_IRREDUCIBLE_COMPLEXITY_DESCRIPTION', 'SDG_BELIEF_CLASS_199') ;
-UPDATE Beliefs SET BeliefClassType = 'SDG_BELIEF_CLASS_' || (SELECT cast(COUNT(BeliefType) + 9 as text) FROM Beliefs WHERE BeliefClassType LIKE 'SDG_BELIEF_CLASS_%') WHERE BeliefClassType = 'SDG_BELIEF_CLASS_199' ;
+
+INSERT INTO BeliefClasses (BeliefClassType, Name, MaxInReligion, AdoptionOrder)
+	SELECT 'SDG_BELIEF_CLASS_SCIENCE_' || (SELECT cast(COUNT(BeliefType) + 100 as text) FROM Beliefs WHERE BeliefClassType LIKE 'SDG_BELIEF_CLASS_%'), 'LOC_SDG_BELIEF_CLASS_SCIENCE_NAME', 999, (SELECT COUNT(BeliefType) + 100 FROM Beliefs WHERE BeliefClassType LIKE 'SDG_BELIEF_CLASS_%') ;
+INSERT INTO Beliefs (BeliefType, Name, Description, BeliefClassType) 
+	SELECT 'SDG_IRREDUCIBLE_COMPLEXITY', 'LOC_SDG_IRREDUCIBLE_COMPLEXITY', 'LOC_SDG_IRREDUCIBLE_COMPLEXITY_DESCRIPTION', 'SDG_BELIEF_CLASS_SCIENCE_' || (SELECT cast(COUNT(BeliefType) + 100 as text) FROM Beliefs WHERE BeliefClassType LIKE 'SDG_BELIEF_CLASS_%') ;
 
 INSERT INTO BeliefModifiers (BeliefType, ModifierID) VALUES ('SDG_IRREDUCIBLE_COMPLEXITY', 'SDG_IRREDUCIBLE_COMPLEXITY_BASE_YIELD') ;
 INSERT INTO Modifiers (ModifierId, ModifierType, SubjectRequirementSetId) VALUES
@@ -81,8 +90,11 @@ INSERT INTO ModifierArguments (ModifierId, Name, Value)
 -- ------------------------------------
 -- ------------------------------------
 INSERT INTO Types (Type, Kind) VALUES ('SDG_NON_OVERLAPPING_MAGISTERIA', 'KIND_BELIEF') ; 
-INSERT INTO Beliefs (BeliefType, Name, Description, BeliefClassType) VALUES ('SDG_NON_OVERLAPPING_MAGISTERIA', 'LOC_SDG_NON_OVERLAPPING_MAGISTERIA', 'LOC_SDG_NON_OVERLAPPING_MAGISTERIA_DESCRIPTION', 'SDG_BELIEF_CLASS_199') ;
-UPDATE Beliefs SET BeliefClassType = 'SDG_BELIEF_CLASS_' || (SELECT cast(COUNT(BeliefType) + 9 as text) FROM Beliefs WHERE BeliefClassType LIKE 'SDG_BELIEF_CLASS_%') WHERE BeliefClassType = 'SDG_BELIEF_CLASS_199' ;
+
+INSERT INTO BeliefClasses (BeliefClassType, Name, MaxInReligion, AdoptionOrder)
+	SELECT 'SDG_BELIEF_CLASS_SCIENCE_' || (SELECT cast(COUNT(BeliefType) + 100 as text) FROM Beliefs WHERE BeliefClassType LIKE 'SDG_BELIEF_CLASS_%'), 'LOC_SDG_BELIEF_CLASS_SCIENCE_NAME', 999, (SELECT COUNT(BeliefType) + 100 FROM Beliefs WHERE BeliefClassType LIKE 'SDG_BELIEF_CLASS_%') ;
+INSERT INTO Beliefs (BeliefType, Name, Description, BeliefClassType) 
+	SELECT 'SDG_NON_OVERLAPPING_MAGISTERIA', 'LOC_SDG_NON_OVERLAPPING_MAGISTERIA', 'LOC_SDG_NON_OVERLAPPING_MAGISTERIA_DESCRIPTION', 'SDG_BELIEF_CLASS_SCIENCE_' || (SELECT cast(COUNT(BeliefType) + 100 as text) FROM Beliefs WHERE BeliefClassType LIKE 'SDG_BELIEF_CLASS_%') ;
 
 INSERT INTO BeliefModifiers (BeliefType, ModifierID) VALUES ('SDG_NON_OVERLAPPING_MAGISTERIA', 'SDG_NON_OVERLAPPING_MAGISTERIA_CITY_YIELD_PERCENT') ; 
 INSERT INTO Modifiers (ModifierId, ModifierType, SubjectRequirementSetId) VALUES ('SDG_NON_OVERLAPPING_MAGISTERIA_CITY_YIELD_PERCENT', 'DB_DM_CITIES_ADJUST_YIELD_PERCENT', 'CITY_FOLLOWS_RELIGION_REQUIREMENTS') ;
@@ -96,14 +108,14 @@ INSERT INTO ModifierArguments (ModifierId, Name, Value) VALUES
 -- ------------------------------------
 -- ------------------------------------
 INSERT INTO Types (Type, Kind) VALUES ('SDG_TRUTH_CANNOT_CONTRADICT_TRUTH', 'KIND_BELIEF') ; 
-INSERT INTO Beliefs (BeliefType, Name, Description, BeliefClassType) VALUES ('SDG_TRUTH_CANNOT_CONTRADICT_TRUTH', 'LOC_SDG_TRUTH_CANNOT_CONTRADICT_TRUTH', 'LOC_SDG_TRUTH_CANNOT_CONTRADICT_TRUTH_DESCRIPTION', 'SDG_BELIEF_CLASS_199') ;
-UPDATE Beliefs SET BeliefClassType = 'SDG_BELIEF_CLASS_' || (SELECT cast(COUNT(BeliefType) + 9 as text) FROM Beliefs WHERE BeliefClassType LIKE 'SDG_BELIEF_CLASS_%') WHERE BeliefClassType = 'SDG_BELIEF_CLASS_199' ;
+
+INSERT INTO BeliefClasses (BeliefClassType, Name, MaxInReligion, AdoptionOrder)
+	SELECT 'SDG_BELIEF_CLASS_SCIENCE_' || (SELECT cast(COUNT(BeliefType) + 100 as text) FROM Beliefs WHERE BeliefClassType LIKE 'SDG_BELIEF_CLASS_%'), 'LOC_SDG_BELIEF_CLASS_SCIENCE_NAME', 999, (SELECT COUNT(BeliefType) + 100 FROM Beliefs WHERE BeliefClassType LIKE 'SDG_BELIEF_CLASS_%') ;
+INSERT INTO Beliefs (BeliefType, Name, Description, BeliefClassType) 
+	SELECT 'SDG_TRUTH_CANNOT_CONTRADICT_TRUTH', 'LOC_SDG_TRUTH_CANNOT_CONTRADICT_TRUTH', 'LOC_SDG_TRUTH_CANNOT_CONTRADICT_TRUTH_DESCRIPTION', 'SDG_BELIEF_CLASS_SCIENCE_' || (SELECT cast(COUNT(BeliefType) + 100 as text) FROM Beliefs WHERE BeliefClassType LIKE 'SDG_BELIEF_CLASS_%') ;
 
 INSERT INTO BeliefModifiers (BeliefType, ModifierID) VALUES ('SDG_TRUTH_CANNOT_CONTRADICT_TRUTH', 'SDG_TRUTH_CANNOT_CONTRADICT_TRUTH_PERCENT_FOR_FOLLOWERS') ; 
 INSERT INTO Modifiers (ModifierId, ModifierType, SubjectRequirementSetId) VALUES ('SDG_TRUTH_CANNOT_CONTRADICT_TRUTH_PERCENT_FOR_FOLLOWERS', 'DB_DM_CITIES_ADJUST_FOLLOWER_YIELD_PERCENT', 'CITY_FOLLOWS_RELIGION_REQUIREMENTS') ;
 INSERT INTO ModifierArguments (ModifierId, Name, Value) VALUES 
                               ('SDG_TRUTH_CANNOT_CONTRADICT_TRUTH_PERCENT_FOR_FOLLOWERS', 'Amount', 1),
 							  ('SDG_TRUTH_CANNOT_CONTRADICT_TRUTH_PERCENT_FOR_FOLLOWERS', 'YieldType', 'YIELD_SCIENCE') ;
-
-
-  

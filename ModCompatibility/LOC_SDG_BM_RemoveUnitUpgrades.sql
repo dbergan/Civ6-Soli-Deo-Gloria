@@ -1,0 +1,2 @@
+UPDATE LocalizedText SET Text = REPLACE(Text, '25', '100') WHERE Tag = 'LOC_SDG_SWORD_OF_GIDEON_DESCRIPTION' and Language = 'en_US' ;
+UPDATE LocalizedText SET Text = REPLACE(Text, '25', '100') WHERE Tag = 'LOC_SDG_ABILITY_SWORD_OF_GIDEON_DESCRIPTION' and Language = 'en_US' ;

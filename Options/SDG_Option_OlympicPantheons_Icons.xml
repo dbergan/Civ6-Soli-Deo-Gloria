@@ -11,6 +11,7 @@
 		<Row Name="ICON_OP_ATLAS"                      Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="10" />
 		<Row Name="ICON_OP_DEMETER"                    Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="19" />
 		<Row Name="ICON_OP_DIONYSUS"                   Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="21" />
+		<Row Name="ICON_BUILDING_OP_PEACE_AND_LOVE"    Atlas="ICON_ATLAS_TECH"			  Index="4" />
 
 		<Row Name="ICON_OP_GAIA"                       Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="26" />
 		<Row Name="ICON_OP_HADES"                      Atlas="ICON_ATLAS_BELIEFS_PATHEON" Index="11" />
