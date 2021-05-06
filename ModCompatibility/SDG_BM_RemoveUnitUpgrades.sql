@@ -1,1 +1,0 @@
-UPDATE ModifierArguments SET Value = 100 WHERE ModifierId = 'SDG_SWORD_OF_GIDEON_COMBAT' AND Name = 'Amount' ;

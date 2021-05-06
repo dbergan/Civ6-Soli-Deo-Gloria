@@ -1707,6 +1707,16 @@ INSERT OR IGNORE INTO DynamicModifiers (ModifierType, CollectionType, EffectType
 INSERT OR IGNORE INTO Types (Type, Kind) VALUES ('DB_DM_CAN_WALL_ATTACK_PROMOTION_CLASS', 'KIND_MODIFIER') ;
 INSERT OR IGNORE INTO DynamicModifiers (ModifierType, CollectionType, EffectType) VALUES ('DB_DM_CAN_WALL_ATTACK_PROMOTION_CLASS', 'COLLECTION_OWNER', 'EFFECT_ADJUST_UNIT_ENABLE_WALL_ATTACK_PROMOTION_CLASS') ;
 
+-- Is Hidden (like a Privateer)
+--    UNITS (Hidden [bool])
+INSERT OR IGNORE INTO Types (Type, Kind) VALUES ('DB_DM_IS_HIDDEN', 'KIND_MODIFIER') ;
+INSERT OR IGNORE INTO DynamicModifiers (ModifierType, CollectionType, EffectType) VALUES ('DB_DM_IS_HIDDEN', 'COLLECTION_OWNER', 'EFFECT_ADJUST_UNIT_HIDDEN_VISIBILITY') ;
+
+-- Can see hidden units
+--    UNITS (SeeHidden [bool])
+INSERT OR IGNORE INTO Types (Type, Kind) VALUES ('DB_DM_CAN_SEE_HIDDEN', 'KIND_MODIFIER') ;
+INSERT OR IGNORE INTO DynamicModifiers (ModifierType, CollectionType, EffectType) VALUES ('DB_DM_CAN_SEE_HIDDEN', 'COLLECTION_OWNER', 'EFFECT_ADJUST_UNIT_SEE_HIDDEN') ;
+
 -----------------------------------------------
 -- Player
 -----------------------------------------------

@@ -25,11 +25,11 @@ INSERT OR REPLACE INTO LocalizedText
 
 ('LOC_OP_ARES', 'Ares', 'en_US'),
 ('LOC_OP_ARES_DESCRIPTION', 'No war weariness[NEWLINE]Land military units in foreign territory:[NEWLINE][ICON_Bullet]+6[ICON_STRENGTH]/[ICON_Ranged]/[ICON_Bombard] when attacking[NEWLINE][ICON_Bullet]Kills give you [ICON_Faith] equal to the defeated unit''s base [ICON_STRENGTH][NEWLINE]Holy Sites next to an Encampment get +10 [ICON_Faith] Faith', 'en_US'),
-('LOC_OP_ABILITY_ARES_FOREIGN_STRENGTH_NAME', 'Ares: Foreign Strength', 'en_US'),
-('LOC_OP_ABILITY_ARES_FOREIGN_STRENGTH_DESCRIPTION', 'Land military units in foreign territory: +6[ICON_STRENGTH]/[ICON_Ranged]/[ICON_Bombard] when attacking', 'en_US'),
-('LOC_OP_ARES_FOREIGN_STRENGTH_COMBAT_DESCRIPTION', '+{1_Value} Ares', 'en_US'),
-('LOC_OP_ABILITY_ARES_FAITH_ON_KILL_NAME', 'Ares: Faith on Kill', 'en_US'),
-('LOC_OP_ABILITY_ARES_FAITH_ON_KILL_DESCRIPTION', 'Land military units in foreign territory: Kills give you [ICON_Faith] according to the defeated unit''s base', 'en_US'),
+('LOC_OP_ABILITY_ARES_FOREIGN_STRENGTH_NAME', 'Ares{LOC_SDG_LABEL}', 'en_US'),
+('LOC_OP_ABILITY_ARES_FOREIGN_STRENGTH_DESCRIPTION', '+6[ICON_STRENGTH]/[ICON_Ranged]/[ICON_Bombard] when attacking in foreign territory', 'en_US'),
+('LOC_OP_ARES_FOREIGN_STRENGTH_COMBAT_DESCRIPTION', '+{1_Value} {LOC_OP_ABILITY_ARES_FOREIGN_STRENGTH_NAME}', 'en_US'),
+('LOC_OP_ABILITY_ARES_FAITH_ON_KILL_NAME', 'Ares{LOC_SDG_LABEL}', 'en_US'),
+('LOC_OP_ABILITY_ARES_FAITH_ON_KILL_DESCRIPTION', 'Kills in foreign territory give you [ICON_Faith] according to the defeated unit''s base', 'en_US'),
 ('LOC_PEDIA_RELIGIONS_PAGE_OP_ARES_CHAPTER_HISTORY_PARA_1', 'Ares is the god of war; son of Zeus and Hera. In Greek literature, he often represents the physical or violent and untamed aspect of war, in contrast to his sister, the armored Athena, whose functions as a goddess of intelligence include military strategy and generalship.[NEWLINE][NEWLINE]The Greeks were ambivalent toward Ares: although he embodied the physical valor necessary for success in war, he was a dangerous force, "overwhelming, insatiable in battle, destructive, and man-slaughtering."', 'en_US'),
 
 ('LOC_OP_ARTEMIS', 'Artemis', 'en_US'),
@@ -45,7 +45,7 @@ INSERT OR REPLACE INTO LocalizedText
 ('LOC_PEDIA_RELIGIONS_PAGE_OP_ATLAS_CHAPTER_HISTORY_PARA_1', 'Atlas was a Titan condemned to hold up the sky for eternity. Although associated with various places, he became commonly identified with the Atlas Mountains in northwest Africa (modern-day Morocco, Algeria and Tunisia). Atlas was the son of the Titan Iapetus and the Oceanid Asia or Clymene. He had many children, mostly daughters, the Hesperides, the Hyades, the Pleiades, and the nymph Calypso who lived on the island Ogygia. Atlas stood at the ends of the earth towards the west.  ''Atlantic Ocean'' means ''Sea of Atlas'', while ''Atlantis'' means ''island of Atlas''.', 'en_US'),
 
 ('LOC_OP_DEMETER', 'Demeter', 'en_US'),
-('LOC_OP_DEMETER_DESCRIPTION', '[ICON_RESOURCE_WHEAT][ICON_RESOURCE_MAIZE][ICON_RESOURCE_RICE][ICON_RESOURCE_BANANAS] --> [ICON_Food][ICON_Food][ICON_Faith][NEWLINE](+2 Food and +1 Faith on farms/plantations for Wheat, Maize, Rice, and Bananas)[NEWLINE]These also get +5 [ICON_Faith] Faith when next to a Holy Site', 'en_US'),
+('LOC_OP_DEMETER_DESCRIPTION', '[ICON_RESOURCE_WHEAT][ICON_RESOURCE_RICE][ICON_RESOURCE_MAIZE][ICON_RESOURCE_BANANAS] --> [ICON_Food][ICON_Food][ICON_Faith][NEWLINE](+2 Food and +1 Faith on farms/plantations for Wheat, Rice, Maize, and Bananas)[NEWLINE]These also get +5 [ICON_Faith] Faith when next to a Holy Site', 'en_US'),
 ('LOC_PEDIA_RELIGIONS_PAGE_OP_DEMETER_CHAPTER_HISTORY_PARA_1', 'Demeter is the goddess of the grain, agriculture, harvest, growth, and nourishment, who presided over grains and the fertility of the earth. Though Demeter is often described simply as the goddess of the harvest, she presided also over the sacred law, and the cycle of life and death.', 'en_US'),
 
 ('LOC_OP_DIONYSUS', 'Dionysus', 'en_US'),
@@ -83,8 +83,8 @@ INSERT OR REPLACE INTO LocalizedText
 ('LOC_OP_HERMES', 'Hermes', 'en_US'),
 ('LOC_OP_HERMES_DESCRIPTION', 'Speed & Harvest Bonuses[NEWLINE][ICON_Bullet]Roads are one era more advanced than usual[NEWLINE][ICON_Bullet]Free road to cities within trade route range of capital[NEWLINE][ICON_Bullet]Harvesting a resource/feature yields [ICON_Faith] Faith[NEWLINE][ICON_Bullet]Spies establish in cities instantly[NEWLINE][ICON_Bullet]+5 [ICON_FAITH] on [ICON_RESOURCE_MERCURY] Mercury', 'en_US'),
 ('LOC_PEDIA_RELIGIONS_PAGE_OP_HERMES_CHAPTER_HISTORY_PARA_1', 'Hermes is the god of trade, heraldry, merchants, commerce, roads, sports, travelers, and athletes; the son of Zeus and the Pleiad Maia, he was the second youngest of the Olympian gods (Dionysus being the youngest).[NEWLINE][NEWLINE]Hermes was the emissary and messenger of the gods. He was also the divine ''trickster'' and the god of boundaries and the transgression of boundaries, the patron of herdsmen, thieves, graves, and heralds. He is described as moving freely between the worlds of the mortal and divine, and was the conductor of souls into the afterlife.  He was also viewed as the protector and patron of roads and travelers.', 'en_US'),
-('LOC_OP_ABILITY_HERMES_SPY_ESTABILSH_TIME_NAME', 'Hermes: Spies establish in cities instantly', 'en_US'),
-('LOC_OP_ABILITY_HERMES_SPY_ESTABILSH_TIME_DESCRIPTION', 'Hermes: Spies establish in cities instantly', 'en_US'),
+('LOC_OP_ABILITY_HERMES_SPY_ESTABILSH_TIME_NAME', '{LOC_OP_HERMES}{LOC_OP_LABEL}', 'en_US'),
+('LOC_OP_ABILITY_HERMES_SPY_ESTABILSH_TIME_DESCRIPTION', 'Spies establish in cities instantly', 'en_US'),
 
 
 ('LOC_OP_HESTIA', 'Hestia', 'en_US'),

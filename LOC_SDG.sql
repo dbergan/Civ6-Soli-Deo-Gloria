@@ -3,6 +3,9 @@
 
 INSERT OR REPLACE INTO LocalizedText 
 (Tag, Text, Language) VALUES
+('LOC_MOD_LABEL', ' [COLOR_RED][MOD][ENDCOLOR]', 'en_US'),
+('LOC_SDG_LABEL', ' [COLOR:SuzerainDark][SDG][ENDCOLOR]', 'en_US'),
+('LOC_OP_LABEL', ' [COLOR:SuzerainDark][OP][ENDCOLOR]', 'en_US'),
 
 
 -- TODO: Not sure I like this... can I do better?
@@ -136,12 +139,12 @@ INSERT OR REPLACE INTO LocalizedText
 ('LOC_SDG_PEDIA_RELIGIONS_PAGEGROUP_FAITHPURCHASES_BELIEFS_NAME', '9 - Faith Purchase Beliefs', 'en_US'),
 
 
-('LOC_SDG_ABILITY_GREAT_PROPHET_STRENGTH_NAME', 'Adjacent Great Prophet Combat', 'en_US'),
-('LOC_SDG_ABILITY_GREAT_PROPHET_STRENGTH_DESCRIPTION', 'When next to a Great Prophet, +5 Combat Strength', 'en_US'),
-('LOC_SDG_MOD_GREAT_PROPHET_STRENGTH_PREVIEW', '+{1_Value} Great Prophet', 'en_US'),
+('LOC_SDG_ABILITY_GREAT_PROPHET_STRENGTH_NAME', 'Great Prophet{LOC_SDG_LABEL}', 'en_US'),
+('LOC_SDG_ABILITY_GREAT_PROPHET_STRENGTH_DESCRIPTION', '+5[ICON_Religion]Religious Strength when next to a Great Prophet.', 'en_US'),
+('LOC_SDG_MOD_GREAT_PROPHET_STRENGTH_PREVIEW', '+{1_Value} {LOC_SDG_ABILITY_GREAT_PROPHET_STRENGTH_NAME}', 'en_US'),
 
-('LOC_SDG_ABILITY_GREAT_PROPHET_MOVEMENT_NAME', 'Adjacent Great Prophet Movement', 'en_US'),
-('LOC_SDG_ABILITY_GREAT_PROPHET_MOVEMENT_DESCRIPTION', 'When next to a Great Prophet, +1 [ICON_Movement] Movement', 'en_US'),
+('LOC_SDG_ABILITY_GREAT_PROPHET_MOVEMENT_NAME', 'Great Prophet{LOC_SDG_LABEL}', 'en_US'),
+('LOC_SDG_ABILITY_GREAT_PROPHET_MOVEMENT_DESCRIPTION', '+1[ICON_Movement]Movement when next to a Great Prophet', 'en_US'),
 
 
 -- Used by the Great Prophet promotion
